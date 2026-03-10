@@ -6,37 +6,61 @@ import sqlite3
 import time
 from datetime import datetime, timedelta
 
-# Load API key
-with open("api.key", "r") as f:
-    API_KEY = f.read().strip()
+import pandas as pd
+import requests
 
-sector_etfs = [
-    "SPY",
-    "XLK",
-    "XLF",
-    "XLE",
-    "XLV",
-    "XLI",
-    "XLP",
-    "XLY",
-    "XLU",
-    "XLB",
-    "XLRE"
-]
 
-# Compute start_date for last 5 days
-start_date = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%dT00:00:00")
+def configure_logging():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+    )
 
-def get_data(symbol):
 
+def load_api_key(path="api.key"):
+    logging.info("Loading API key from %s", path)
+    with open(path, "r") as key_file:
+        return key_file.read().strip()
+
+
+def get_sector_etfs():
+    return [
+        "SPY",
+        "XLK",
+        "XLF",
+        "XLE",
+        "XLV",
+        "XLI",
+        "XLP",
+        "XLY",
+        "XLU",
+        "XLB",
+        "XLRE",
+    ]
+
+
+def get_start_date(days_back=7):
+    return (datetime.now() - timedelta(days=days_back)).strftime("%Y-%m-%dT00:00:00")
+
+
+def is_rate_limit_error(response_data):
+    return (
+        response_data.get("status") == "error"
+        and response_data.get("code") == 429
+        and "run out of api credits for the current minute"
+        in str(response_data.get("message", "")).lower()
+    )
+
+
+def fetch_symbol_data(symbol, api_key, start_date):
+    logging.info("Requesting API data for %s", symbol)
     url = "https://api.twelvedata.com/time_series"
-
     params = {
         "symbol": symbol,
         "interval": "1day",
         "start_date": start_date,
         "timezone": "America/New_York",
-        "apikey": API_KEY
+        "apikey": api_key,
     }
 
     while True:
@@ -63,8 +87,10 @@ def get_data(symbol):
 
         raise RuntimeError(f"API error for {symbol}: {data}")
 
-    df = pd.DataFrame(data["values"])
 
+def payload_to_dataframe(payload):
+    logging.info("Converting payload to dataframe")
+    df = pd.DataFrame(payload["values"])
     df["datetime"] = pd.to_datetime(df["datetime"])
     df = df.sort_values("datetime")
 
@@ -73,7 +99,6 @@ def get_data(symbol):
     df["low"] = df["low"].astype(float)
     df["close"] = df["close"].astype(float)
     df["volume"] = df["volume"].astype(float)
-
     return df
 
 
@@ -86,7 +111,7 @@ for etf in sector_etfs:
     print(df)
 
     if len(df) < 5:
-        raise RuntimeError(f"Not enough data returned for {etf}")
+        raise RuntimeError(f"Not enough data returned for {symbol}")
 
     for row in df.itertuples(index=False):
         price_rows.append((
@@ -100,17 +125,50 @@ for etf in sector_etfs:
         ))
 
     last5 = df.tail(5)
-
     ret_5d = (last5["close"].iloc[-1] / last5["close"].iloc[0] - 1) * 100
     vol_5d = last5["volume"].sum()
 
-    results.append({
-        "ETF": etf,
+    return {
+        "ETF": symbol,
         "5D Return %": round(ret_5d, 2),
-        "5D Volume": int(vol_5d)
-    })
+        "5D Volume": int(vol_5d),
+    }
 
-df_results = pd.DataFrame(results)
+
+def process_symbol(conn, symbol, api_key, start_date):
+    payload = fetch_symbol_data(symbol, api_key, start_date)
+    df = payload_to_dataframe(payload)
+    logging.info("Fetched dataframe for %s with %s rows", symbol, len(df))
+    print(df)
+    insert_symbol_rows(conn, symbol, df)
+    return calculate_symbol_metrics(symbol, df)
+
+
+def main():
+    configure_logging()
+    logging.info("Starting ETF stats pull")
+
+    api_key = load_api_key()
+    start_date = get_start_date()
+    symbols = get_sector_etfs()
+
+    conn = open_database("trading.db")
+    try:
+        ensure_etf_table(conn)
+
+        results = []
+        for symbol in symbols:
+            logging.info("Processing symbol %s", symbol)
+            result = process_symbol(conn, symbol, api_key, start_date)
+            results.append(result)
+
+        df_results = pd.DataFrame(results)
+        logging.info("Completed processing all symbols")
+        print(df_results.sort_values("5D Return %", ascending=False))
+    finally:
+        logging.info("Closing database connection")
+        conn.close()
+
 
 print(df_results.sort_values("5D Return %", ascending=False))
 
