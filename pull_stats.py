@@ -25,10 +25,7 @@ def load_config(path="config.yaml"):
 
 
 def load_api_key(config):
-    key_file = config["api"]["key_file"]
-    logging.info("Loading API key from %s", key_file)
-    with open(key_file, "r") as file_handle:
-        return file_handle.read().strip()
+    return config["api_key"]
 
 
 def get_sector_etfs(config):
@@ -154,27 +151,10 @@ def insert_symbol_rows(conn, symbol, df):
     conn.commit()
 
 
-def calculate_symbol_metrics(symbol, df):
-    logging.info("Calculating 5-day metrics for %s", symbol)
-    if len(df) < 5:
-        raise RuntimeError(f"Not enough data returned for {symbol}")
-
-    last5 = df.tail(5)
-    ret_5d = (last5["close"].iloc[-1] / last5["close"].iloc[0] - 1) * 100
-    vol_5d = last5["volume"].sum()
-
-    return {
-        "ETF": symbol,
-        "5D Return %": round(ret_5d, 2),
-        "5D Volume": int(vol_5d),
-    }
-
-
 def process_symbol(conn, symbol, api_key, start_date):
     payload = fetch_symbol_data(symbol, api_key, start_date)
     df = payload_to_dataframe(payload)
     logging.info("Fetched dataframe for %s with %s rows", symbol, len(df))
-    print(df)
     insert_symbol_rows(conn, symbol, df)
     return calculate_symbol_metrics(symbol, df)
 
