@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import logging
-import sqlite3
+
+import psycopg2
 import time
+import yaml
 from datetime import datetime, timedelta
 
 import pandas as pd
@@ -16,26 +18,21 @@ def configure_logging():
     )
 
 
-def load_api_key(path="api.key"):
-    logging.info("Loading API key from %s", path)
-    with open(path, "r") as key_file:
-        return key_file.read().strip()
+def load_config(path="config.yaml"):
+    logging.info("Loading config from %s", path)
+    with open(path, "r") as config_file:
+        return yaml.safe_load(config_file)
 
 
-def get_sector_etfs():
-    return [
-        "SPY",
-        "XLK",
-        "XLF",
-        "XLE",
-        "XLV",
-        "XLI",
-        "XLP",
-        "XLY",
-        "XLU",
-        "XLB",
-        "XLRE",
-    ]
+def load_api_key(config):
+    key_file = config["api"]["key_file"]
+    logging.info("Loading API key from %s", key_file)
+    with open(key_file, "r") as file_handle:
+        return file_handle.read().strip()
+
+
+def get_sector_etfs(config):
+    return config["etfs"]["symbols"]
 
 
 def get_start_date(days_back=7):
@@ -92,45 +89,44 @@ def payload_to_dataframe(payload):
     return df
 
 
-def open_database(path="trading.db"):
-    logging.info("Opening sqlite database at %s", path)
-    conn = sqlite3.connect(path)
+def open_database(config):
+    db_config = config["postgres"]
+    logging.info(
+        "Opening Postgres database %s on %s:%s",
+        db_config["dbname"],
+        db_config["host"],
+        db_config["port"],
+    )
+    conn = psycopg2.connect(**db_config)
     return conn
 
 
 def ensure_etf_table(conn):
-    logging.info("Ensuring etf table exists with expected schema")
-    cursor = conn.cursor()
-    expected_columns = ["etf_symbol", "datetime", "open", "high", "low", "close", "volume"]
-    cursor.execute("PRAGMA table_info(etf)")
-    existing_columns = [row[1] for row in cursor.fetchall()]
-
-    if existing_columns and existing_columns != expected_columns:
-        logging.warning("Existing etf schema does not match expected columns; recreating table")
-        cursor.execute("DROP TABLE etf")
-
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS etf (
-            etf_symbol TEXT,
-            datetime TEXT,
-            open REAL,
-            high REAL,
-            low REAL,
-            close REAL,
-            volume REAL
+    logging.info("Ensuring etf_flows table exists with expected schema")
+    with conn.cursor() as cursor:
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS etf_flows (
+                etf TEXT NOT NULL,
+                date DATE NOT NULL,
+                open DOUBLE PRECISION,
+                high DOUBLE PRECISION,
+                low DOUBLE PRECISION,
+                close DOUBLE PRECISION,
+                volume DOUBLE PRECISION,
+                CONSTRAINT etf_flows_date_etf_uniq UNIQUE (date, etf)
+            )
+            """
         )
-        """
-    )
     conn.commit()
 
 
 def insert_symbol_rows(conn, symbol, df):
-    logging.info("Inserting %s rows for %s into etf table", len(df), symbol)
+    logging.info("Upserting %s rows for %s into etf_flows", len(df), symbol)
     rows = [
         (
             symbol,
-            row.datetime.strftime("%Y-%m-%d %H:%M:%S"),
+            row.datetime.date(),
             row.open,
             row.high,
             row.low,
@@ -140,11 +136,21 @@ def insert_symbol_rows(conn, symbol, df):
         for row in df.itertuples(index=False)
     ]
 
-    cursor = conn.cursor()
-    cursor.executemany(
-        "INSERT INTO etf (etf_symbol, datetime, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        rows,
-    )
+    with conn.cursor() as cursor:
+        cursor.executemany(
+            """
+            INSERT INTO etf_flows (etf, date, open, high, low, close, volume)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (date, etf)
+            DO UPDATE SET
+                open = EXCLUDED.open,
+                high = EXCLUDED.high,
+                low = EXCLUDED.low,
+                close = EXCLUDED.close,
+                volume = EXCLUDED.volume
+            """,
+            rows,
+        )
     conn.commit()
 
 
@@ -177,11 +183,12 @@ def main():
     configure_logging()
     logging.info("Starting ETF stats pull")
 
-    api_key = load_api_key()
+    config = load_config()
+    api_key = load_api_key(config)
     start_date = get_start_date()
-    symbols = get_sector_etfs()
+    symbols = get_sector_etfs(config)
 
-    conn = open_database("trading.db")
+    conn = open_database(config)
     try:
         ensure_etf_table(conn)
 
