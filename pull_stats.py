@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import requests
-import pandas as pd
+import logging
 import sqlite3
 import time
 from datetime import datetime, timedelta
@@ -64,28 +63,20 @@ def fetch_symbol_data(symbol, api_key, start_date):
     }
 
     while True:
-        r = requests.get(url, params=params)
+        response = requests.get(url, params=params, timeout=30)
+        response.raise_for_status()
+        payload = response.json()
 
-        # Raise error if HTTP request fails
-        r.raise_for_status()
+        if payload.get("status") == "ok":
+            logging.info("API response OK for %s", symbol)
+            return payload
 
-        data = r.json()
-
-        if data.get("status") == "ok":
-            break
-
-        message = str(data.get("message", "")).lower()
-        code = str(data.get("code", "")).lower()
-
-        is_rate_limited = "rate" in message and "limit" in message
-        is_rate_limited = is_rate_limited or "rate_limit" in code
-
-        if is_rate_limited:
-            print(f"Rate limit exceeded for {symbol}. Waiting 60 seconds before retrying...")
+        if is_rate_limit_error(payload):
+            logging.warning("Rate limit reached for %s; waiting 60 seconds before retry", symbol)
             time.sleep(60)
             continue
 
-        raise RuntimeError(f"API error for {symbol}: {data}")
+        raise RuntimeError(f"API error for {symbol}: {payload}")
 
 
 def payload_to_dataframe(payload):
@@ -93,7 +84,6 @@ def payload_to_dataframe(payload):
     df = pd.DataFrame(payload["values"])
     df["datetime"] = pd.to_datetime(df["datetime"])
     df = df.sort_values("datetime")
-
     df["open"] = df["open"].astype(float)
     df["high"] = df["high"].astype(float)
     df["low"] = df["low"].astype(float)
@@ -102,27 +92,66 @@ def payload_to_dataframe(payload):
     return df
 
 
-results = []
-price_rows = []
+def open_database(path="trading.db"):
+    logging.info("Opening sqlite database at %s", path)
+    conn = sqlite3.connect(path)
+    return conn
 
-for etf in sector_etfs:
 
-    df = get_data(etf)
-    print(df)
+def ensure_etf_table(conn):
+    logging.info("Ensuring etf table exists with expected schema")
+    cursor = conn.cursor()
+    expected_columns = ["etf_symbol", "datetime", "open", "high", "low", "close", "volume"]
+    cursor.execute("PRAGMA table_info(etf)")
+    existing_columns = [row[1] for row in cursor.fetchall()]
 
-    if len(df) < 5:
-        raise RuntimeError(f"Not enough data returned for {symbol}")
+    if existing_columns and existing_columns != expected_columns:
+        logging.warning("Existing etf schema does not match expected columns; recreating table")
+        cursor.execute("DROP TABLE etf")
 
-    for row in df.itertuples(index=False):
-        price_rows.append((
-            etf,
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS etf (
+            etf_symbol TEXT,
+            datetime TEXT,
+            open REAL,
+            high REAL,
+            low REAL,
+            close REAL,
+            volume REAL
+        )
+        """
+    )
+    conn.commit()
+
+
+def insert_symbol_rows(conn, symbol, df):
+    logging.info("Inserting %s rows for %s into etf table", len(df), symbol)
+    rows = [
+        (
+            symbol,
             row.datetime.strftime("%Y-%m-%d %H:%M:%S"),
             row.open,
             row.high,
             row.low,
             row.close,
             row.volume,
-        ))
+        )
+        for row in df.itertuples(index=False)
+    ]
+
+    cursor = conn.cursor()
+    cursor.executemany(
+        "INSERT INTO etf (etf_symbol, datetime, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        rows,
+    )
+    conn.commit()
+
+
+def calculate_symbol_metrics(symbol, df):
+    logging.info("Calculating 5-day metrics for %s", symbol)
+    if len(df) < 5:
+        raise RuntimeError(f"Not enough data returned for {symbol}")
 
     last5 = df.tail(5)
     ret_5d = (last5["close"].iloc[-1] / last5["close"].iloc[0] - 1) * 100
@@ -170,34 +199,5 @@ def main():
         conn.close()
 
 
-print(df_results.sort_values("5D Return %", ascending=False))
-
-conn = sqlite3.connect("trading.db")
-cursor = conn.cursor()
-
-expected_columns = ["etf_symbol", "datetime", "open", "high", "low", "close", "volume"]
-cursor.execute("PRAGMA table_info(etf)")
-existing_columns = [row[1] for row in cursor.fetchall()]
-
-if existing_columns and existing_columns != expected_columns:
-    cursor.execute("DROP TABLE etf")
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS etf (
-    etf_symbol TEXT,
-    datetime TEXT,
-    open REAL,
-    high REAL,
-    low REAL,
-    close REAL,
-    volume REAL
-)
-""")
-
-cursor.executemany(
-    "INSERT INTO etf (etf_symbol, datetime, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    price_rows,
-)
-
-conn.commit()
-conn.close()
+if __name__ == "__main__":
+    main()
