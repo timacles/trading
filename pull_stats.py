@@ -151,6 +151,23 @@ def insert_symbol_rows(conn, symbol, df):
     conn.commit()
 
 
+def calculate_symbol_metrics(symbol, df):
+    logging.info("Calculating 5-day metrics for %s", symbol)
+    if len(df) < 5:
+        raise RuntimeError(f"Not enough data returned for {symbol}")
+
+    last5 = df.tail(5)
+    ret_5d = (last5["close"].iloc[-1] / last5["close"].iloc[0] - 1) * 100
+    vol_5d = last5["volume"].sum()
+
+    return {
+        "ETF": symbol,
+        "5D Return %": round(ret_5d, 2),
+        "5D Volume": int(vol_5d),
+    }
+
+
+
 def process_symbol(conn, symbol, api_key, start_date):
     payload = fetch_symbol_data(symbol, api_key, start_date)
     df = payload_to_dataframe(payload)
