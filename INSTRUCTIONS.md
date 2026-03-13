@@ -1,58 +1,62 @@
-# ETF Sector Rotation Tracker - Instructions
+# Momentum Scalper (1-5 Day Holds) - Instructions
 
 ## Overview
-This project tracks ETF sector rotations to generate a rough macro assessment of market trends and identify where volume and momentum are flowing.
+This project supports a short-term momentum scalper focused on 1-5 day holds in key ETFs. It uses a local Postgres database of OHLCV data to detect recent flows, momentum bursts, and mean reversion setups for entries over the next few days.
 
 ## Objectives
-- Generate a weekly macro assessment based on ETF sector rotations
-- Track volume and momentum shifts across different market sectors
-- Identify emerging trends and rotation patterns
-- Maintain historical data for comparative analysis
+- Identify near-term momentum opportunities and mean reversion setups.
+- Use recent OHLCV flows to score and rank candidates.
+- Produce a short list of actionable entries with clear triggers and invalidation.
+- Keep analysis fast, repeatable, and focused on the next 1-5 trading days.
 
-## Data Structure Requirements
-- Use markdown file(s) to track weekly rotations
-- Capture key metrics: volume changes, price momentum, relative strength
-- Track sector performance week-over-week
-- Maintain a simple, scannable format for quick analysis
+## Data Source
+- Local Postgres database stores OHLCV for key ETFs.
+- Query the most recent data for each symbol and compute short-horizon signals.
+- Use the newest available trading day as the anchor for all calculations.
 
-## Weekly Workflow
-1. **Data Collection** (weekly cadence)
-   - Gather volume and price data for major sector ETFs
-   - Calculate week-over-week changes
-   - Note relative strength vs. benchmark (e.g., SPY)
+## Core Signals (Short Horizon)
+- **Momentum**: 1-3 day return, 5-day return, and distance from short-term moving average.
+- **Mean Reversion**: z-score of 5-10 day returns, distance from 5/10 day moving average.
+- **Flow Proxy**: volume spike vs. 5/20 day average, dollar volume acceleration.
+- **Volatility**: 5-day ATR or range expansion vs. recent average.
 
-2. **Analysis**
-   - Identify sectors with increasing volume/momentum (accumulation)
-   - Identify sectors with decreasing volume/momentum (distribution)
-   - Note any sector rotation patterns (risk-on vs. risk-off)
+## Setup Types
+- **Momentum Continuation**: strong 1-3 day move with volume confirmation and trend alignment.
+- **Mean Reversion**: extended move with exhaustion signals and a clear reversion target.
+- **Breakout/Breakdown**: range compression followed by directional expansion with volume.
 
-3. **Documentation**
-   - Update markdown tracker with weekly observations
-   - Flag notable changes or emerging trends
-   - Keep historical records for pattern recognition
+## Workflow (Daily or On-Demand)
+1. **Fetch Data**
+   - Query latest OHLCV for the ETF universe.
+   - Ensure no missing recent bars; prefer the most recent completed session.
 
-## Suggested ETF Categories to Track
-- **Growth/Tech**: QQQ, XLK, ARKK
-- **Value/Financials**: XLF, KRE
-- **Defensive**: XLU, XLP, XLV
-- **Cyclical**: XLI, XLB, XLE
-- **Precious Metals**: GLD, SLV
-- **Fixed Income**: TLT, LQD, HYG
-- **Benchmark**: SPY, DIA
+2. **Compute Signals**
+   - Calculate short-term returns, moving averages, volume ratios, and range metrics.
+   - Normalize to allow cross-ETF comparison.
 
-## Simple Indicators
-- **Volume**: Week-over-week percentage change
-- **Momentum**: Price change percentage (1-week, 4-week)
-- **Relative Strength**: Performance vs. SPY benchmark
-- **Trend Signal**: Simple directional indicator (↑ accumulation, ↓ distribution, → neutral)
+3. **Rank Candidates**
+   - Score by setup type (momentum vs. mean reversion) and confidence.
+   - Keep a short list of top 5-10 candidates.
 
-## Deliverables
-- Weekly markdown file or running tracker
-- Simple macro assessment summary
-- Rotation heat map or visual indicators (optional enhancement)
+4. **Generate Trade Notes**
+   - Entry trigger (price/level or condition).
+   - Invalidation level (tight, consistent with 1-5 day hold).
+   - Target or expected move window.
+   - Time stop: exit if the move does not develop within 3-5 sessions.
+
+## ETF Universe (Initial)
+- **Broad Market**: SPY, QQQ, DIA, IWM
+- **Sectors**: XLK, XLF, XLE, XLI, XLB, XLP, XLU, XLV, XLY
+- **Rates/Credit**: TLT, LQD, HYG
+- **Commodities**: GLD, SLV, USO
+- **Volatility/Hedging (optional)**: VXX, SH, PSQ
+
+## Output Format
+- **Daily Scan Summary**: date, market tone, notable flows.
+- **Candidates Table**: symbol, setup type, score, key signals.
+- **Trade Notes**: entry trigger, invalidation, target/time stop.
 
 ## Notes
-- Keep it simple and actionable
-- Focus on relative changes, not absolute values
-- Look for divergences and rotation patterns
-- This is a rough assessment tool, not precision analytics
+- Focus on recent flows and short-term structure, not long-term themes.
+- Avoid overfitting: use a small, consistent feature set.
+- This is a decision aid, not financial advice.

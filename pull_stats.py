@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import logging
 
 import psycopg2
@@ -167,11 +168,27 @@ def calculate_symbol_metrics(symbol, df):
     }
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Pull ETF stats and store OHLCV data.")
+    parser.add_argument(
+        "--symbol",
+        help="Single ETF symbol to process (overrides config list).",
+    )
+    parser.add_argument(
+        "--print-data",
+        action="store_true",
+        help="Print raw API data after extraction.",
+    )
+    return parser.parse_args()
 
-def process_symbol(conn, symbol, api_key, start_date):
+
+
+def process_symbol(conn, symbol, api_key, start_date, print_data=False):
     payload = fetch_symbol_data(symbol, api_key, start_date)
     df = payload_to_dataframe(payload)
     logging.info("Fetched dataframe for %s with %s rows", symbol, len(df))
+    if print_data:
+        print(df.to_string(index=False))
     insert_symbol_rows(conn, symbol, df)
     return calculate_symbol_metrics(symbol, df)
 
@@ -180,10 +197,15 @@ def main():
     configure_logging()
     logging.info("Starting ETF stats pull")
 
+    args = parse_args()
     config = load_config()
     api_key = load_api_key(config)
     start_date = get_start_date()
-    symbols = get_sector_etfs(config)
+    if args.symbol:
+        symbols = [args.symbol.upper()]
+        logging.info("Using CLI symbol override: %s", symbols[0])
+    else:
+        symbols = get_sector_etfs(config)
 
     conn = open_database(config)
     try:
@@ -192,7 +214,7 @@ def main():
         results = []
         for symbol in symbols:
             logging.info("Processing symbol %s", symbol)
-            result = process_symbol(conn, symbol, api_key, start_date)
+            result = process_symbol(conn, symbol, api_key, start_date, print_data=args.print_data)
             results.append(result)
 
         df_results = pd.DataFrame(results)
