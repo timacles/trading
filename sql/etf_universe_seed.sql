@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS etf_universe (
+    etf TEXT PRIMARY KEY,
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+INSERT INTO etf_universe (etf)
+SELECT DISTINCT etf
+FROM etf_flows
+ON CONFLICT (etf) DO NOTHING;

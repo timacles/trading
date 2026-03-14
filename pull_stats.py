@@ -29,8 +29,32 @@ def load_api_key(config):
     return config["api_key"]
 
 
-def get_sector_etfs(config):
-    return config["etfs"]["symbols"]
+def ensure_etf_universe_table(conn):
+    logging.info("Ensuring etf_universe table exists")
+    with conn.cursor() as cursor:
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS etf_universe (
+                etf TEXT PRIMARY KEY,
+                active BOOLEAN NOT NULL DEFAULT TRUE
+            )
+            """
+        )
+    conn.commit()
+
+
+def get_target_etfs(conn):
+    with conn.cursor() as cursor:
+        cursor.execute(
+            """
+            SELECT etf
+            FROM etf_universe
+            WHERE active = TRUE
+            ORDER BY etf
+            """
+        )
+        rows = cursor.fetchall()
+    return [row[0] for row in rows]
 
 
 def get_start_date(days_back=7):
@@ -201,15 +225,18 @@ def main():
     config = load_config()
     api_key = load_api_key(config)
     start_date = get_start_date()
-    if args.symbol:
-        symbols = [args.symbol.upper()]
-        logging.info("Using CLI symbol override: %s", symbols[0])
-    else:
-        symbols = get_sector_etfs(config)
-
     conn = open_database(config)
     try:
         ensure_etf_table(conn)
+        ensure_etf_universe_table(conn)
+
+        if args.symbol:
+            symbols = [args.symbol.upper()]
+            logging.info("Using CLI symbol override: %s", symbols[0])
+        else:
+            symbols = get_target_etfs(conn)
+            if not symbols:
+                raise RuntimeError("No active symbols found in etf_universe.")
 
         results = []
         for symbol in symbols:

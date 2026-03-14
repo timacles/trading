@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-import datetime as dt
 import logging
 from pathlib import Path
 
@@ -21,14 +20,29 @@ REPORT_TEMPLATE = """# Daily Flow Report — {report_date}
 - Average Volume Ratio (5D): {avg_vol_ratio_5:.2f}
 - Average Range Ratio (5D): {avg_range_ratio_5:.2f}
 
-## Top Momentum Score (Today)
-| ETF | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
+## Bond and Treasury Stats (Today)
+| ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D |
 | --- | --- | --- | --- | --- | --- | --- |
+{bond_rows}
+
+## Volatility Averages (Today)
+- Average Daily Range: {avg_range_1d:.4f}
+- Average 5D Range: {avg_range_avg_5:.4f}
+- Average Range Ratio (5D): {avg_range_ratio_5:.2f}
+
+## Top Momentum Score (Today)
+| ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 {momentum_rows}
 
+## Top Momentum Score With Positive 3D Trend (Today)
+| ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+{momentum_pos3d_rows}
+
 ## Top Mean Reversion Score (Today)
-| ETF | 1D Ret | 3D Ret | 5D Ret | Dist MA(5) | ZScore(5D) | Mean Reversion Score |
-| --- | --- | --- | --- | --- | --- | --- |
+| ETF | Name | 1D Ret | 3D Ret | 5D Ret | Dist MA(5) | ZScore(5D) | Mean Reversion Score |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 {mean_reversion_rows}
 """
 
@@ -82,6 +96,7 @@ def get_top_momentum(cursor, report_date, limit):
     query = """
         SELECT
             etf,
+            etf_name,
             ret_1d,
             ret_3d,
             ret_5d,
@@ -96,10 +111,31 @@ def get_top_momentum(cursor, report_date, limit):
     return fetch_all(cursor, query, (report_date, limit))
 
 
+def get_top_momentum_pos3d(cursor, report_date, limit):
+    query = """
+        SELECT
+            etf,
+            etf_name,
+            ret_1d,
+            ret_3d,
+            ret_5d,
+            vol_ratio_5,
+            range_ratio_5,
+            momentum_score
+        FROM v_etf_signal_rank
+        WHERE date = %s
+          AND ret_3d > 0
+        ORDER BY momentum_score DESC NULLS LAST
+        LIMIT %s
+    """
+    return fetch_all(cursor, query, (report_date, limit))
+
+
 def get_top_mean_reversion(cursor, report_date, limit):
     query = """
         SELECT
             etf,
+            etf_name,
             ret_1d,
             ret_3d,
             ret_5d,
@@ -112,6 +148,36 @@ def get_top_mean_reversion(cursor, report_date, limit):
         LIMIT %s
     """
     return fetch_all(cursor, query, (report_date, limit))
+
+
+def get_bond_stats(cursor, report_date, symbols):
+    query = """
+        SELECT
+            etf,
+            etf_name,
+            ret_1d,
+            ret_3d,
+            ret_5d,
+            vol_ratio_5,
+            range_ratio_5
+        FROM v_etf_signals
+        WHERE date = %s
+          AND etf = ANY(%s)
+        ORDER BY etf
+    """
+    return fetch_all(cursor, query, (report_date, symbols))
+
+
+def get_volatility_averages(cursor, report_date):
+    query = """
+        SELECT
+            AVG(range_1d) AS avg_range_1d,
+            AVG(range_avg_5) AS avg_range_avg_5,
+            AVG(range_ratio_5) AS avg_range_ratio_5
+        FROM v_etf_signals
+        WHERE date = %s
+    """
+    return fetch_one(cursor, query, (report_date,))
 
 
 def format_pct(value):
@@ -129,23 +195,38 @@ def format_num(value, precision=2):
 def build_momentum_rows(rows):
     lines = []
     for row in rows:
-        etf, ret_1d, ret_3d, ret_5d, vol_ratio_5, range_ratio_5, score = row
+        etf, etf_name, ret_1d, ret_3d, ret_5d, vol_ratio_5, range_ratio_5, score = row
+        name = etf_name or "n/a"
         lines.append(
-            f"| {etf} | {format_pct(ret_1d)} | {format_pct(ret_3d)} | "
+            f"| {etf} | {name} | {format_pct(ret_1d)} | {format_pct(ret_3d)} | "
             f"{format_pct(ret_5d)} | {format_num(vol_ratio_5)} | "
             f"{format_num(range_ratio_5)} | {format_num(score, 3)} |"
         )
-    return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a | n/a |"
+    return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |"
 
 
 def build_mean_reversion_rows(rows):
     lines = []
     for row in rows:
-        etf, ret_1d, ret_3d, ret_5d, dist_ma_5, zscore_5d, score = row
+        etf, etf_name, ret_1d, ret_3d, ret_5d, dist_ma_5, zscore_5d, score = row
+        name = etf_name or "n/a"
         lines.append(
-            f"| {etf} | {format_pct(ret_1d)} | {format_pct(ret_3d)} | "
+            f"| {etf} | {name} | {format_pct(ret_1d)} | {format_pct(ret_3d)} | "
             f"{format_pct(ret_5d)} | {format_num(dist_ma_5, 4)} | "
             f"{format_num(zscore_5d, 3)} | {format_num(score, 3)} |"
+        )
+    return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |"
+
+
+def build_bond_rows(rows):
+    lines = []
+    for row in rows:
+        etf, etf_name, ret_1d, ret_3d, ret_5d, vol_ratio_5, range_ratio_5 = row
+        name = etf_name or "n/a"
+        lines.append(
+            f"| {etf} | {name} | {format_pct(ret_1d)} | {format_pct(ret_3d)} | "
+            f"{format_pct(ret_5d)} | {format_num(vol_ratio_5)} | "
+            f"{format_num(range_ratio_5)} |"
         )
     return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a | n/a |"
 
@@ -171,7 +252,7 @@ def parse_args():
     parser.add_argument(
         "--top",
         type=int,
-        default=5,
+        default=10,
         help="Number of top momentum and mean reversion rows.",
     )
     return parser.parse_args()
@@ -191,13 +272,25 @@ def main():
             if report_date is None:
                 raise RuntimeError("No data found in etf_flows.")
 
+            bond_symbols = ["AGG", "BND", "TLT", "LQD", "HYG", "JNK", "TIP", "EMB"]
+
             breadth = get_breadth(cursor, report_date)
             advancers, decliners, avg_ret_1d, avg_vol_ratio_5, avg_range_ratio_5 = breadth
 
             market_direction = classify_market(advancers, decliners, avg_ret_1d)
 
+            bond_rows = build_bond_rows(
+                get_bond_stats(cursor, report_date, bond_symbols)
+            )
+
+            volatility_averages = get_volatility_averages(cursor, report_date)
+            avg_range_1d, avg_range_avg_5, avg_range_ratio_5 = volatility_averages
+
             momentum_rows = build_momentum_rows(
                 get_top_momentum(cursor, report_date, args.top)
+            )
+            momentum_pos3d_rows = build_momentum_rows(
+                get_top_momentum_pos3d(cursor, report_date, args.top)
             )
             mean_reversion_rows = build_mean_reversion_rows(
                 get_top_mean_reversion(cursor, report_date, args.top)
@@ -211,7 +304,11 @@ def main():
                 avg_ret_1d=avg_ret_1d or 0.0,
                 avg_vol_ratio_5=avg_vol_ratio_5 or 0.0,
                 avg_range_ratio_5=avg_range_ratio_5 or 0.0,
+                bond_rows=bond_rows,
+                avg_range_1d=avg_range_1d or 0.0,
+                avg_range_avg_5=avg_range_avg_5 or 0.0,
                 momentum_rows=momentum_rows,
+                momentum_pos3d_rows=momentum_pos3d_rows,
                 mean_reversion_rows=mean_reversion_rows,
             )
 
