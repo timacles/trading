@@ -2,6 +2,9 @@ DROP VIEW IF EXISTS v_etf_signal_rank;
 DROP VIEW IF EXISTS v_etf_signals;
 DROP VIEW IF EXISTS v_etf_enriched;
 DROP VIEW IF EXISTS v_latest_etf;
+DROP VIEW IF EXISTS v_industry_signal_rank;
+DROP VIEW IF EXISTS v_industry_signals;
+DROP VIEW IF EXISTS v_latest_industry;
 
 CREATE OR REPLACE VIEW v_latest_etf AS
 SELECT DISTINCT ON (f.etf)
@@ -16,6 +19,24 @@ SELECT DISTINCT ON (f.etf)
 FROM etf_flows f
 LEFT JOIN etf_metadata m ON m.etf = f.etf
 ORDER BY f.etf, f.date DESC;
+
+CREATE OR REPLACE VIEW v_latest_industry AS
+SELECT DISTINCT ON (industry)
+    as_of_date,
+    industry,
+    rank,
+    perf_week,
+    perf_month,
+    perf_quart,
+    perf_half,
+    perf_year,
+    perf_ytd,
+    avg_volume,
+    rel_volume,
+    change,
+    volume
+FROM industry_flows
+ORDER BY industry, as_of_date DESC;
 
 CREATE OR REPLACE VIEW v_etf_enriched AS
 SELECT
@@ -74,6 +95,35 @@ SELECT
 FROM etf_flows f
 LEFT JOIN etf_metadata m ON m.etf = f.etf;
 
+CREATE OR REPLACE VIEW v_industry_signals AS
+SELECT
+    as_of_date,
+    industry,
+    rank,
+    perf_week,
+    perf_month,
+    perf_quart,
+    perf_half,
+    perf_year,
+    perf_ytd,
+    avg_volume,
+    rel_volume,
+    change,
+    volume,
+    CASE
+        WHEN avg_volume IS NULL OR avg_volume = 0 THEN NULL
+        ELSE volume / avg_volume
+    END AS volume_ratio,
+    (perf_week - AVG(perf_week) OVER (PARTITION BY as_of_date))
+        / NULLIF(STDDEV_SAMP(perf_week) OVER (PARTITION BY as_of_date), 0) AS z_perf_week,
+    (perf_month - AVG(perf_month) OVER (PARTITION BY as_of_date))
+        / NULLIF(STDDEV_SAMP(perf_month) OVER (PARTITION BY as_of_date), 0) AS z_perf_month,
+    (rel_volume - AVG(rel_volume) OVER (PARTITION BY as_of_date))
+        / NULLIF(STDDEV_SAMP(rel_volume) OVER (PARTITION BY as_of_date), 0) AS z_rel_volume,
+    (change - AVG(change) OVER (PARTITION BY as_of_date))
+        / NULLIF(STDDEV_SAMP(change) OVER (PARTITION BY as_of_date), 0) AS z_change
+FROM industry_flows;
+
 CREATE OR REPLACE VIEW v_etf_signals AS
 SELECT
     etf,
@@ -115,6 +165,37 @@ SELECT
         ELSE (close - ma_10) / NULLIF(ma_10, 0)
     END AS dist_ma_10
 FROM v_etf_enriched;
+
+CREATE OR REPLACE VIEW v_industry_signal_rank AS
+SELECT
+    as_of_date,
+    industry,
+    rank,
+    perf_week,
+    perf_month,
+    perf_quart,
+    perf_half,
+    perf_year,
+    perf_ytd,
+    avg_volume,
+    rel_volume,
+    change,
+    volume,
+    volume_ratio,
+    z_perf_week,
+    z_perf_month,
+    z_rel_volume,
+    z_change,
+    (
+        COALESCE(z_perf_week, 0) * 0.6
+        + COALESCE(z_perf_month, 0) * 0.4
+        + COALESCE(z_rel_volume, 0) * 0.2
+    ) AS momentum_score,
+    (
+        ABS(COALESCE(z_perf_week, 0)) * 0.7
+        + ABS(COALESCE(z_change, 0)) * 0.3
+    ) AS mean_reversion_score
+FROM v_industry_signals;
 
 CREATE OR REPLACE VIEW v_etf_signal_rank AS
 SELECT

@@ -10,6 +10,8 @@ import yaml
 
 REPORT_TEMPLATE = """# Daily Flow Report — {report_date}
 
+# Summary
+
 ## Market Direction
 {market_direction}
 
@@ -20,6 +22,23 @@ REPORT_TEMPLATE = """# Daily Flow Report — {report_date}
 - Average Volume Ratio (5D): {avg_vol_ratio_5:.2f}
 - Average Range Ratio (5D): {avg_range_ratio_5:.2f}
 
+# Industry
+
+## Industry Flow Snapshot (Latest)
+- As-of Date: {industry_date}
+
+## Top Industry Momentum (Latest)
+| Industry | Perf Week | Perf Month | Rel Volume | Change | Momentum Score |
+| --- | --- | --- | --- | --- | --- |
+{industry_momentum_rows}
+
+## Top Industry Mean Reversion (Latest)
+| Industry | Perf Week | Perf Quart | Rel Volume | Change | Mean Reversion Score |
+| --- | --- | --- | --- | --- | --- |
+{industry_reversion_rows}
+
+# Bond/Treasury
+
 ## Bond and Treasury Stats (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -29,6 +48,8 @@ REPORT_TEMPLATE = """# Daily Flow Report — {report_date}
 - Average Daily Range: {avg_range_1d:.4f}
 - Average 5D Range: {avg_range_avg_5:.4f}
 - Average Range Ratio (5D): {avg_range_ratio_5:.2f}
+
+# Sector ETFs
 
 ## Top Momentum Score (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
@@ -179,11 +200,55 @@ def get_volatility_averages(cursor, report_date):
     """
     return fetch_one(cursor, query, (report_date,))
 
+def get_latest_industry_date(cursor):
+    row = fetch_one(cursor, "SELECT MAX(as_of_date) FROM industry_flows;")
+    return row[0]
+
+
+def get_top_industry_momentum(cursor, as_of_date, limit):
+    query = """
+        SELECT
+            industry,
+            perf_week,
+            perf_month,
+            rel_volume,
+            change,
+            momentum_score
+        FROM v_industry_signal_rank
+        WHERE as_of_date = %s
+        ORDER BY momentum_score DESC NULLS LAST
+        LIMIT %s
+    """
+    return fetch_all(cursor, query, (as_of_date, limit))
+
+
+def get_top_industry_reversion(cursor, as_of_date, limit):
+    query = """
+        SELECT
+            industry,
+            perf_week,
+            perf_quart,
+            rel_volume,
+            change,
+            mean_reversion_score
+        FROM v_industry_signal_rank
+        WHERE as_of_date = %s
+          AND perf_week < 0
+        ORDER BY mean_reversion_score DESC NULLS LAST
+        LIMIT %s
+    """
+    return fetch_all(cursor, query, (as_of_date, limit))
+
 
 def format_pct(value):
     if value is None:
         return "n/a"
     return f"{value:.2%}"
+
+def format_pct_points(value):
+    if value is None:
+        return "n/a"
+    return f"{value:.2f}%"
 
 
 def format_num(value, precision=2):
@@ -230,6 +295,27 @@ def build_bond_rows(rows):
         )
     return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a | n/a |"
 
+def build_industry_momentum_rows(rows):
+    lines = []
+    for row in rows:
+        industry, perf_week, perf_month, rel_volume, change, score = row
+        lines.append(
+            f"| {industry} | {format_pct_points(perf_week)} | {format_pct_points(perf_month)} | "
+            f"{format_num(rel_volume)} | {format_pct_points(change)} | {format_num(score, 3)} |"
+        )
+    return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a |"
+
+
+def build_industry_reversion_rows(rows):
+    lines = []
+    for row in rows:
+        industry, perf_week, perf_quart, rel_volume, change, score = row
+        lines.append(
+            f"| {industry} | {format_pct_points(perf_week)} | {format_pct_points(perf_quart)} | "
+            f"{format_num(rel_volume)} | {format_pct_points(change)} | {format_num(score, 3)} |"
+        )
+    return "\n".join(lines) if lines else "| n/a | n/a | n/a | n/a | n/a | n/a |"
+
 
 def classify_market(advancers, decliners, avg_ret_1d):
     if advancers is None or decliners is None or avg_ret_1d is None:
@@ -272,6 +358,7 @@ def main():
             if report_date is None:
                 raise RuntimeError("No data found in etf_flows.")
 
+            industry_date = get_latest_industry_date(cursor)
             bond_symbols = ["AGG", "BND", "TLT", "LQD", "HYG", "JNK", "TIP", "EMB"]
 
             breadth = get_breadth(cursor, report_date)
@@ -296,6 +383,19 @@ def main():
                 get_top_mean_reversion(cursor, report_date, args.top)
             )
 
+            if industry_date:
+                industry_momentum_rows = build_industry_momentum_rows(
+                    get_top_industry_momentum(cursor, industry_date, args.top)
+                )
+                industry_reversion_rows = build_industry_reversion_rows(
+                    get_top_industry_reversion(cursor, industry_date, args.top)
+                )
+                industry_date_display = industry_date.strftime("%Y-%m-%d")
+            else:
+                industry_momentum_rows = build_industry_momentum_rows([])
+                industry_reversion_rows = build_industry_reversion_rows([])
+                industry_date_display = "n/a"
+
             report = REPORT_TEMPLATE.format(
                 report_date=report_date.strftime("%Y-%m-%d"),
                 market_direction=market_direction,
@@ -304,6 +404,9 @@ def main():
                 avg_ret_1d=avg_ret_1d or 0.0,
                 avg_vol_ratio_5=avg_vol_ratio_5 or 0.0,
                 avg_range_ratio_5=avg_range_ratio_5 or 0.0,
+                industry_date=industry_date_display,
+                industry_momentum_rows=industry_momentum_rows,
+                industry_reversion_rows=industry_reversion_rows,
                 bond_rows=bond_rows,
                 avg_range_1d=avg_range_1d or 0.0,
                 avg_range_avg_5=avg_range_avg_5 or 0.0,
