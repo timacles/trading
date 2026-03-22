@@ -1,0 +1,571 @@
+{
+  "generated_at": "2026-03-22T02:11:08.953722+00:00",
+  "report_date": "2026-03-20",
+  "market_direction": "Risk-off / bearish. Breadth and average returns are negative.",
+  "breadth": {
+    "as_of_date": "2026-03-20",
+    "advancers": 4,
+    "decliners": 44,
+    "avg_ret_1d": -0.018857796248825724,
+    "avg_vol_ratio_5": 1.3194288995165933,
+    "avg_range_ratio_5": 1.3968481576231413
+  },
+  "industry": {
+    "as_of_date": "2026-03-21",
+    "top_momentum": [
+      {
+        "industry": "Thermal Coal",
+        "perf_week": 5.31,
+        "perf_month": 9.18,
+        "rel_volume": 2.5,
+        "change": -0.83,
+        "momentum_score": 2.4365156768371548
+      },
+      {
+        "industry": "Oil & Gas Refining & Marketing",
+        "perf_week": 3.13,
+        "perf_month": 15.44,
+        "rel_volume": 2.58,
+        "change": -1.13,
+        "momentum_score": 2.4146424681264653
+      },
+      {
+        "industry": "Oil & Gas E&P",
+        "perf_week": 3.84,
+        "perf_month": 13.32,
+        "rel_volume": 2.23,
+        "change": -0.07,
+        "momentum_score": 2.306871127358082
+      },
+      {
+        "industry": "Oil & Gas Integrated",
+        "perf_week": 3.95,
+        "perf_month": 11.43,
+        "rel_volume": 2.06,
+        "change": -0.16,
+        "momentum_score": 2.1687522582712555
+      },
+      {
+        "industry": "Oil & Gas Equipment & Services",
+        "perf_week": 5.55,
+        "perf_month": -1.86,
+        "rel_volume": 2.57,
+        "change": -1.41,
+        "momentum_score": 1.9230852535060128
+      },
+      {
+        "industry": "Coking Coal",
+        "perf_week": 1.72,
+        "perf_month": 1.38,
+        "rel_volume": 2.68,
+        "change": -3.02,
+        "momentum_score": 1.467421916797322
+      },
+      {
+        "industry": "Oil & Gas Midstream",
+        "perf_week": 1.29,
+        "perf_month": 4.11,
+        "rel_volume": 2.07,
+        "change": -0.67,
+        "momentum_score": 1.327786768895621
+      },
+      {
+        "industry": "Staffing & Employment Services",
+        "perf_week": 3.73,
+        "perf_month": -7.38,
+        "rel_volume": 2.53,
+        "change": 1.38,
+        "momentum_score": 1.3048646562348776
+      },
+      {
+        "industry": "Computer Hardware",
+        "perf_week": 1.68,
+        "perf_month": 1.19,
+        "rel_volume": 2.17,
+        "change": -5.83,
+        "momentum_score": 1.2763518825945221
+      },
+      {
+        "industry": "Scientific & Technical Instruments",
+        "perf_week": 0.5,
+        "perf_month": -0.26,
+        "rel_volume": 2.92,
+        "change": -3.57,
+        "momentum_score": 1.2521649854093404
+      }
+    ],
+    "top_mean_reversion": [
+      {
+        "industry": "Silver",
+        "perf_week": -18.47,
+        "perf_quart": 5.45,
+        "rel_volume": 1.28,
+        "change": -3.97,
+        "mean_reversion_score": 3.614862480245747
+      },
+      {
+        "industry": "Gold",
+        "perf_week": -14.42,
+        "perf_quart": -3.66,
+        "rel_volume": 1.85,
+        "change": -3.8,
+        "mean_reversion_score": 2.765120524308413
+      },
+      {
+        "industry": "Other Precious Metals & Mining",
+        "perf_week": -13.37,
+        "perf_quart": -8.88,
+        "rel_volume": 1.5,
+        "change": -3.71,
+        "mean_reversion_score": 2.5362644876330727
+      },
+      {
+        "industry": "Utilities - Independent Power Producers",
+        "perf_week": -6.29,
+        "perf_quart": -13.11,
+        "rel_volume": 1.47,
+        "change": -10.58,
+        "mean_reversion_score": 2.385500448394172
+      },
+      {
+        "industry": "Aluminum",
+        "perf_week": -10.67,
+        "perf_quart": 23.88,
+        "rel_volume": 1.28,
+        "change": -3.58,
+        "mean_reversion_score": 1.9666660963270963
+      },
+      {
+        "industry": "Copper",
+        "perf_week": -9.66,
+        "perf_quart": 7.97,
+        "rel_volume": 1.27,
+        "change": -3.78,
+        "mean_reversion_score": 1.7998952181692391
+      },
+      {
+        "industry": "Uranium",
+        "perf_week": -7.34,
+        "perf_quart": 17.46,
+        "rel_volume": 2.16,
+        "change": -5.0,
+        "mean_reversion_score": 1.5584593693637256
+      },
+      {
+        "industry": "Textile Manufacturing",
+        "perf_week": -8.02,
+        "perf_quart": -2.5,
+        "rel_volume": 2.6,
+        "change": -4.04,
+        "mean_reversion_score": 1.5170403954648117
+      },
+      {
+        "industry": "Real Estate - Diversified",
+        "perf_week": -6.91,
+        "perf_quart": -13.06,
+        "rel_volume": 2.71,
+        "change": -4.19,
+        "mean_reversion_score": 1.3207586585972677
+      },
+      {
+        "industry": "REIT - Healthcare Facilities",
+        "perf_week": -5.45,
+        "perf_quart": 3.25,
+        "rel_volume": 3.15,
+        "change": -4.66,
+        "mean_reversion_score": 1.1133704104741031
+      }
+    ]
+  },
+  "bond_treasury": {
+    "as_of_date": "2026-03-20",
+    "symbols": [
+      "AGG",
+      "BND",
+      "TLT",
+      "LQD",
+      "HYG",
+      "JNK",
+      "TIP",
+      "EMB"
+    ],
+    "rows": [
+      {
+        "etf": "AGG",
+        "name": "Core US Aggregate Bond",
+        "ret_1d": -0.008342546989647185,
+        "ret_3d": -0.011422845691382771,
+        "ret_5d": -0.005543795988307602,
+        "vol_ratio_5": 1.4613680376151723,
+        "range_ratio_5": 1.526946107784432
+      },
+      {
+        "etf": "BND",
+        "name": "Total Bond Market",
+        "ret_1d": -0.007998915401301564,
+        "ret_3d": -0.010948905109489081,
+        "ret_5d": -0.005166553365057722,
+        "vol_ratio_5": 1.4514891913709864,
+        "range_ratio_5": 1.5040625950201905
+      },
+      {
+        "etf": "EMB",
+        "name": "EM USD Bonds",
+        "ret_1d": -0.015639860509352108,
+        "ret_3d": -0.020504711261928668,
+        "ret_5d": -0.013032422123331106,
+        "vol_ratio_5": 1.0899453644888082,
+        "range_ratio_5": 1.8382366133206367
+      },
+      {
+        "etf": "HYG",
+        "name": "High Yield Corporate Bonds",
+        "ret_1d": -0.009289480291237696,
+        "ret_3d": -0.011151484776343824,
+        "ret_5d": -0.0035353535353535494,
+        "vol_ratio_5": 1.4774159760726673,
+        "range_ratio_5": 1.5315315315315379
+      },
+      {
+        "etf": "JNK",
+        "name": "High Yield Bonds",
+        "ret_1d": -0.008769182586908899,
+        "ret_3d": -0.011246475176991315,
+        "ret_5d": -0.0031496062992125685,
+        "vol_ratio_5": 1.3443194238266913,
+        "range_ratio_5": 1.6269841269841159
+      },
+      {
+        "etf": "LQD",
+        "name": "Investment Grade Corporate Bonds",
+        "ret_1d": -0.01227218609762802,
+        "ret_3d": -0.01326623970722784,
+        "ret_5d": -0.00295830636960347,
+        "vol_ratio_5": 1.0861657926320183,
+        "range_ratio_5": 1.4957269218595206
+      },
+      {
+        "etf": "TIP",
+        "name": "TIPS",
+        "ret_1d": -0.008010080100801013,
+        "ret_3d": -0.011036339165545124,
+        "ret_5d": -0.004425977779784978,
+        "vol_ratio_5": 1.2317882017079713,
+        "range_ratio_5": 1.646345478891406
+      },
+      {
+        "etf": "TLT",
+        "name": "20+ Year Treasuries",
+        "ret_1d": -0.01897359698251225,
+        "ret_3d": -0.018524871355060087,
+        "ret_5d": -0.008204298590247376,
+        "vol_ratio_5": 1.687828813379474,
+        "range_ratio_5": 1.8092105263157765
+      }
+    ],
+    "volatility_averages": {
+      "avg_range_1d": 2.306666527083335,
+      "avg_range_avg_5": 1.5849124929166667,
+      "avg_range_ratio_5": 1.3968481576231413
+    }
+  },
+  "sector_etfs": {
+    "as_of_date": "2026-03-20",
+    "top_momentum": [
+      {
+        "etf": "XLRE",
+        "name": "Real Estate Sector",
+        "ret_1d": -0.03172709923664118,
+        "ret_3d": -0.049859550561797646,
+        "ret_5d": -0.03928994082840229,
+        "vol_ratio_5": 1.707786224124858,
+        "range_ratio_5": 2.311876001246298,
+        "momentum_score": 0.9603408106476891
+      },
+      {
+        "etf": "XLU",
+        "name": "Utilities Sector",
+        "ret_1d": -0.040610227761065765,
+        "ret_3d": -0.05262041162741362,
+        "ret_5d": -0.04919080068143105,
+        "vol_ratio_5": 1.6129614545962725,
+        "range_ratio_5": 2.4134214805767167,
+        "momentum_score": 0.955690127638825
+      },
+      {
+        "etf": "EWU",
+        "name": "United Kingdom",
+        "ret_1d": -0.02793172245621809,
+        "ret_3d": -0.052915766738660816,
+        "ret_5d": -0.03264945951908222,
+        "vol_ratio_5": 2.003568719905461,
+        "range_ratio_5": 1.944445252792257,
+        "momentum_score": 0.944220880045558
+      },
+      {
+        "etf": "EWJ",
+        "name": "Japan",
+        "ret_1d": -0.03425311526514938,
+        "ret_3d": -0.04560415971781466,
+        "ret_5d": -0.025911708253358885,
+        "vol_ratio_5": 2.013390380787679,
+        "range_ratio_5": 1.895911485468955,
+        "momentum_score": 0.9415675325785717
+      },
+      {
+        "etf": "TLT",
+        "name": "20+ Year Treasuries",
+        "ret_1d": -0.01897359698251225,
+        "ret_3d": -0.018524871355060087,
+        "ret_5d": -0.008204298590247376,
+        "vol_ratio_5": 1.687828813379474,
+        "range_ratio_5": 1.8092105263157765,
+        "momentum_score": 0.8608952499511588
+      },
+      {
+        "etf": "EFA",
+        "name": "EAFE",
+        "ret_1d": -0.030356402818068718,
+        "ret_3d": -0.0485920504218766,
+        "ret_5d": -0.028141225337486954,
+        "vol_ratio_5": 1.6156244672992783,
+        "range_ratio_5": 1.82416148325359,
+        "momentum_score": 0.8215798497585354
+      },
+      {
+        "etf": "DBB",
+        "name": "Base Metals",
+        "ret_1d": -0.026579520697167732,
+        "ret_3d": -0.06252622744439776,
+        "ret_5d": -0.06055508830950383,
+        "vol_ratio_5": 2.026186265527454,
+        "range_ratio_5": 1.4095744680851008,
+        "momentum_score": 0.7973995255261879
+      },
+      {
+        "etf": "IEFA",
+        "name": "Core EAFE",
+        "ret_1d": -0.031208362603194546,
+        "ret_3d": -0.04864216381284757,
+        "ret_5d": -0.028402762307863635,
+        "vol_ratio_5": 1.3513019495981806,
+        "range_ratio_5": 1.8441064638783282,
+        "momentum_score": 0.7603296403087716
+      },
+      {
+        "etf": "SPY",
+        "name": "S&P 500",
+        "ret_1d": -0.01702027913034669,
+        "ret_3d": -0.03312507739009457,
+        "ret_5d": -0.020715955871776874,
+        "vol_ratio_5": 1.5497621291662138,
+        "range_ratio_5": 1.575004071710856,
+        "momentum_score": 0.7542710335883318
+      },
+      {
+        "etf": "EEM",
+        "name": "Emerging Markets",
+        "ret_1d": -0.034363068379035,
+        "ret_3d": -0.05293617021276595,
+        "ret_5d": -0.020422535211267547,
+        "vol_ratio_5": 1.7229785493035898,
+        "range_ratio_5": 1.440365597845124,
+        "momentum_score": 0.7541566840751617
+      }
+    ],
+    "top_momentum_pos3d": [
+      {
+        "etf": "DBC",
+        "name": "Broad Commodities",
+        "ret_1d": 0.0034674063800277885,
+        "ret_3d": 0.006258692628650894,
+        "ret_5d": 0.00801114594218044,
+        "vol_ratio_5": 1.7602205776692053,
+        "range_ratio_5": 0.8888888888888922,
+        "momentum_score": 0.6694122859249401
+      },
+      {
+        "etf": "XLE",
+        "name": "Energy Sector",
+        "ret_1d": -0.0008423180592991435,
+        "ret_3d": 0.013672876431379325,
+        "ret_5d": 0.027902946273830144,
+        "vol_ratio_5": 1.3775804945799177,
+        "range_ratio_5": 1.1111118233622808,
+        "momentum_score": 0.6429609908381544
+      },
+      {
+        "etf": "CORN",
+        "name": "Corn",
+        "ret_1d": -0.0015932023366966323,
+        "ret_3d": 0.025641025641025775,
+        "ret_5d": 0.006963042313872469,
+        "vol_ratio_5": 1.4704772882066328,
+        "range_ratio_5": 0.7333333333333414,
+        "momentum_score": 0.5672546893624426
+      },
+      {
+        "etf": "PDBC",
+        "name": "Diversified Commodities",
+        "ret_1d": 0.006387921022067331,
+        "ret_3d": 0.009318578916715002,
+        "ret_5d": 0.011675423234092194,
+        "vol_ratio_5": 0.8339765925131779,
+        "range_ratio_5": 0.9299781181619229,
+        "momentum_score": 0.4514856787441788
+      },
+      {
+        "etf": "WEAT",
+        "name": "Wheat",
+        "ret_1d": -0.020994001713795993,
+        "ret_3d": 0.010614772224679435,
+        "ret_5d": -0.024754588134869752,
+        "vol_ratio_5": 0.8734511124223386,
+        "range_ratio_5": 0.9134615384615422,
+        "momentum_score": 0.43965825476587506
+      },
+      {
+        "etf": "USO",
+        "name": "Oil",
+        "ret_1d": 0.034679618268575386,
+        "ret_3d": 0.02179400875126223,
+        "ret_5d": 0.012845108015681093,
+        "vol_ratio_5": 0.764078899449892,
+        "range_ratio_5": 0.8306761421193218,
+        "momentum_score": 0.41600831877577515
+      },
+      {
+        "etf": "DBA",
+        "name": "Agriculture",
+        "ret_1d": -0.004449388209121151,
+        "ret_3d": 0.00864012021036816,
+        "ret_5d": 0.003738317757009399,
+        "vol_ratio_5": 0.7431791336676801,
+        "range_ratio_5": 0.6542056074766358,
+        "momentum_score": 0.35553540426976776
+      },
+      {
+        "etf": "UNG",
+        "name": "Natural Gas",
+        "ret_1d": -0.013535031847133751,
+        "ret_3d": 0.015573770491803385,
+        "ret_5d": -0.019778481012658226,
+        "vol_ratio_5": 0.8129515781467866,
+        "range_ratio_5": 0.5708661417322825,
+        "momentum_score": 0.34385207470933987
+      },
+      {
+        "etf": "SOYB",
+        "name": "Soybeans",
+        "ret_1d": -0.0057803468208092726,
+        "ret_3d": 0.00041545492314075654,
+        "ret_5d": -0.027463651050080907,
+        "vol_ratio_5": 0.5710261133383898,
+        "range_ratio_5": 0.8041993006992955,
+        "momentum_score": 0.33028225544595124
+      }
+    ],
+    "top_mean_reversion": [
+      {
+        "etf": "EWZ",
+        "name": "Brazil",
+        "ret_1d": -0.03945202739726028,
+        "ret_3d": -0.04494685371833291,
+        "ret_5d": -0.012116060862214771,
+        "dist_ma_5": -0.03181263651931601,
+        "zscore_5d": -1.7359755290981014,
+        "mean_reversion_score": 1.0543103720665872
+      },
+      {
+        "etf": "XLU",
+        "name": "Utilities Sector",
+        "ret_1d": -0.040610227761065765,
+        "ret_3d": -0.05262041162741362,
+        "ret_5d": -0.04919080068143105,
+        "dist_ma_5": -0.03899961258663003,
+        "zscore_5d": -1.7190459387115782,
+        "mean_reversion_score": 1.047027408261599
+      },
+      {
+        "etf": "EWJ",
+        "name": "Japan",
+        "ret_1d": -0.03425311526514938,
+        "ret_3d": -0.04560415971781466,
+        "ret_5d": -0.025911708253358885,
+        "dist_ma_5": -0.03236570825715505,
+        "zscore_5d": -1.7054361410166474,
+        "mean_reversion_score": 1.0362079679128504
+      },
+      {
+        "etf": "TLT",
+        "name": "20+ Year Treasuries",
+        "ret_1d": -0.01897359698251225,
+        "ret_3d": -0.018524871355060087,
+        "ret_5d": -0.008204298590247376,
+        "dist_ma_5": -0.01331218099048146,
+        "zscore_5d": -1.6997827502108382,
+        "mean_reversion_score": 1.0251945225226955
+      },
+      {
+        "etf": "TIP",
+        "name": "TIPS",
+        "ret_1d": -0.008010080100801013,
+        "ret_3d": -0.011036339165545124,
+        "ret_5d": -0.004425977779784978,
+        "dist_ma_5": -0.007170134060568472,
+        "zscore_5d": -1.6942684011754627,
+        "mean_reversion_score": 1.019429094329505
+      },
+      {
+        "etf": "XLK",
+        "name": "Technology Sector",
+        "ret_1d": -0.022682946087043816,
+        "ret_3d": -0.030457218751413127,
+        "ret_5d": -0.011038084795321802,
+        "dist_ma_5": -0.019637725206890538,
+        "zscore_5d": -1.6718072511238162,
+        "mean_reversion_score": 1.010939440757046
+      },
+      {
+        "etf": "EMB",
+        "name": "EM USD Bonds",
+        "ret_1d": -0.015639860509352108,
+        "ret_3d": -0.020504711261928668,
+        "ret_5d": -0.013032422123331106,
+        "dist_ma_5": -0.01322061489955556,
+        "zscore_5d": -1.6716406553670762,
+        "mean_reversion_score": 1.0082726391800678
+      },
+      {
+        "etf": "AGG",
+        "name": "Core US Aggregate Bond",
+        "ret_1d": -0.008342546989647185,
+        "ret_3d": -0.011422845691382771,
+        "ret_5d": -0.005543795988307602,
+        "dist_ma_5": -0.007304851789990533,
+        "zscore_5d": -1.6709314365537962,
+        "mean_reversion_score": 1.0054808026482738
+      },
+      {
+        "etf": "BND",
+        "name": "Total Bond Market",
+        "ret_1d": -0.007998915401301564,
+        "ret_3d": -0.010948905109489081,
+        "ret_5d": -0.005166553365057722,
+        "dist_ma_5": -0.006975734216383419,
+        "zscore_5d": -1.6700110714548513,
+        "mean_reversion_score": 1.004796936559464
+      },
+      {
+        "etf": "VEA",
+        "name": "Developed Markets",
+        "ret_1d": -0.03304237842892768,
+        "ret_3d": -0.051521158844213426,
+        "ret_5d": -0.02789092760890009,
+        "dist_ma_5": -0.03388562341508152,
+        "zscore_5d": -1.6313795828993358,
+        "mean_reversion_score": 0.992381999105634
+      }
+    ]
+  }
+}

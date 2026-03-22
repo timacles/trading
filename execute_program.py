@@ -3,9 +3,9 @@
 
 import pull_stats
 import scrape_finviz
-import generate_report
+import generate_daily_report
 
 
 pull_stats.main()
 scrape_finviz.main()
-generate_report.main()
+generate_daily_report.main()

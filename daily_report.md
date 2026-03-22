@@ -1,109 +1,108 @@
-# Daily Flow Report — 2026-03-16
+# Daily Flow Report — 2026-03-20
 
 # Summary
 
 ## Market Direction
-Risk-on / bullish. Breadth and average returns are positive.
+Risk-off / bearish. Breadth and average returns are negative.
 
 ## Breadth Summary
-- Advancers: 39
-- Decliners: 9
-- Average 1D Return: 0.71%
-- Average Volume Ratio (5D): 0.87
-- Average Range Ratio (5D): 0.76
+- Advancers: 4
+- Decliners: 44
+- Average 1D Return: -1.89%
+- Average Volume Ratio (5D): 1.32
+- Average Range Ratio (5D): 1.40
 
 # Industry
 
 ## Industry Flow Snapshot (Latest)
-- As-of Date: 2026-03-16
+- As-of Date: 2026-03-21
 
 ## Top Industry Momentum (Latest)
 | Industry | Perf Week | Perf Month | Rel Volume | Change | Momentum Score |
 | --- | --- | --- | --- | --- | --- |
-| Oil & Gas Refining & Marketing | 6.07% | 12.49% | 0.84 | 0.79% | 2.426 |
-| Oil & Gas Integrated | 4.81% | 10.40% | 1.02 | 0.80% | 2.181 |
-| Aluminum | 5.53% | 7.49% | 0.99 | 3.63% | 2.143 |
-| Oil & Gas E&P | 2.70% | 14.83% | 1.15 | 0.00% | 2.094 |
-| Agricultural Inputs | 2.62% | 8.15% | 1.52 | -3.10% | 1.960 |
-| Computer Hardware | 5.20% | 5.28% | 0.87 | 3.26% | 1.872 |
-| Communication Equipment | 3.51% | 7.50% | 1.06 | 1.77% | 1.787 |
-| Chemicals | 3.73% | 5.87% | 0.83 | -1.79% | 1.583 |
-| Thermal Coal | 3.12% | 2.64% | 1.24 | -0.36% | 1.562 |
-| Oil & Gas Drilling | 1.86% | 11.46% | 0.84 | -1.48% | 1.526 |
+| Thermal Coal | 5.31% | 9.18% | 2.50 | -0.83% | 2.437 |
+| Oil & Gas Refining & Marketing | 3.13% | 15.44% | 2.58 | -1.13% | 2.415 |
+| Oil & Gas E&P | 3.84% | 13.32% | 2.23 | -0.07% | 2.307 |
+| Oil & Gas Integrated | 3.95% | 11.43% | 2.06 | -0.16% | 2.169 |
+| Oil & Gas Equipment & Services | 5.55% | -1.86% | 2.57 | -1.41% | 1.923 |
+| Coking Coal | 1.72% | 1.38% | 2.68 | -3.02% | 1.467 |
+| Oil & Gas Midstream | 1.29% | 4.11% | 2.07 | -0.67% | 1.328 |
+| Staffing & Employment Services | 3.73% | -7.38% | 2.53 | 1.38% | 1.305 |
+| Computer Hardware | 1.68% | 1.19% | 2.17 | -5.83% | 1.276 |
+| Scientific & Technical Instruments | 0.50% | -0.26% | 2.92 | -3.57% | 1.252 |
 
 ## Top Industry Mean Reversion (Latest)
 | Industry | Perf Week | Perf Quart | Rel Volume | Change | Mean Reversion Score |
 | --- | --- | --- | --- | --- | --- |
-| Silver | -12.32% | 26.57% | 0.95 | -0.21% | 2.719 |
-| Advertising Agencies | -10.54% | -31.49% | 0.79 | -0.69% | 2.437 |
-| Copper | -6.14% | 19.79% | 0.84 | 3.17% | 1.645 |
-| Beverages - Wineries & Distilleries | -6.63% | -14.98% | 1.23 | -0.90% | 1.583 |
-| Metal Fabrication | -6.55% | 7.08% | 1.07 | 2.59% | 1.579 |
-| Other Precious Metals & Mining | -5.73% | 8.11% | 0.75 | 2.78% | 1.440 |
-| Trucking | -7.55% | 8.64% | 0.87 | 1.18% | 1.418 |
-| Rental & Leasing Services | -7.26% | -3.07% | 1.05 | 1.27% | 1.375 |
-| Mortgage Finance | -4.97% | -26.76% | 0.89 | 2.93% | 1.305 |
-| Gold | -7.12% | 12.80% | 0.84 | 1.07% | 1.286 |
+| Silver | -18.47% | 5.45% | 1.28 | -3.97% | 3.615 |
+| Gold | -14.42% | -3.66% | 1.85 | -3.80% | 2.765 |
+| Other Precious Metals & Mining | -13.37% | -8.88% | 1.50 | -3.71% | 2.536 |
+| Utilities - Independent Power Producers | -6.29% | -13.11% | 1.47 | -10.58% | 2.386 |
+| Aluminum | -10.67% | 23.88% | 1.28 | -3.58% | 1.967 |
+| Copper | -9.66% | 7.97% | 1.27 | -3.78% | 1.800 |
+| Uranium | -7.34% | 17.46% | 2.16 | -5.00% | 1.558 |
+| Textile Manufacturing | -8.02% | -2.50% | 2.60 | -4.04% | 1.517 |
+| Real Estate - Diversified | -6.91% | -13.06% | 2.71 | -4.19% | 1.321 |
+| REIT - Healthcare Facilities | -5.45% | 3.25% | 3.15 | -4.66% | 1.113 |
 
 # Bond/Treasury
 
 ## Bond and Treasury Stats (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D |
 | --- | --- | --- | --- | --- | --- | --- |
-| AGG | Core US Aggregate Bond | 0.39% | -0.06% | -0.84% | 0.67 | 0.60 |
-| BND | Total Bond Market | 0.38% | -0.08% | -0.83% | 0.86 | 0.59 |
-| EMB | EM USD Bonds | 0.39% | -0.93% | -1.26% | 0.57 | 0.68 |
-| HYG | High Yield Corporate Bonds | 0.32% | -0.51% | -0.90% | 0.89 | 0.61 |
-| JNK | High Yield Bonds | 0.42% | -0.48% | -0.81% | 0.84 | 0.62 |
-| LQD | Investment Grade Corporate Bonds | 0.48% | -0.43% | -1.92% | 0.97 | 0.68 |
-| TIP | TIPS | 0.32% | -0.01% | -0.49% | 0.85 | 0.72 |
-| TLT | 20+ Year Treasuries | 0.77% | 0.08% | -2.26% | 0.80 | 0.64 |
+| AGG | Core US Aggregate Bond | -0.83% | -1.14% | -0.55% | 1.46 | 1.53 |
+| BND | Total Bond Market | -0.80% | -1.09% | -0.52% | 1.45 | 1.50 |
+| EMB | EM USD Bonds | -1.56% | -2.05% | -1.30% | 1.09 | 1.84 |
+| HYG | High Yield Corporate Bonds | -0.93% | -1.12% | -0.35% | 1.48 | 1.53 |
+| JNK | High Yield Bonds | -0.88% | -1.12% | -0.31% | 1.34 | 1.63 |
+| LQD | Investment Grade Corporate Bonds | -1.23% | -1.33% | -0.30% | 1.09 | 1.50 |
+| TIP | TIPS | -0.80% | -1.10% | -0.44% | 1.23 | 1.65 |
+| TLT | 20+ Year Treasuries | -1.90% | -1.85% | -0.82% | 1.69 | 1.81 |
 
 ## Volatility Averages (Today)
-- Average Daily Range: 1.0939
-- Average 5D Range: 1.4910
-- Average Range Ratio (5D): 0.76
+- Average Daily Range: 2.3067
+- Average 5D Range: 1.5849
+- Average Range Ratio (5D): 1.40
 
 # Sector ETFs
 
 ## Top Momentum Score (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| SOYB | Soybeans | -3.88% | -3.72% | -1.73% | 1.50 | 1.97 | 0.840 |
-| DBA | Agriculture | -1.12% | -0.94% | -0.38% | 0.92 | 1.52 | 0.603 |
-| CORN | Corn | -2.20% | -1.40% | 0.33% | 0.87 | 1.25 | 0.526 |
-| IBIT | Bitcoin | 3.89% | 4.67% | 7.18% | 1.01 | 0.77 | 0.504 |
-| UNG | Natural Gas | -3.40% | -5.20% | -0.81% | 0.88 | 1.18 | 0.486 |
-| CPER | Copper | 2.50% | -1.19% | -0.58% | 1.09 | 0.83 | 0.473 |
-| DBB | Base Metals | 1.39% | -1.79% | -0.86% | 1.34 | 0.58 | 0.466 |
-| XLRE | Real Estate Sector | 0.78% | 0.40% | -0.93% | 1.09 | 0.75 | 0.458 |
-| FXI | China Large Cap | 1.77% | 1.32% | 1.10% | 1.16 | 0.56 | 0.443 |
-| XLB | Materials Sector | 0.43% | -0.88% | -1.18% | 0.92 | 0.88 | 0.442 |
+| XLRE | Real Estate Sector | -3.17% | -4.99% | -3.93% | 1.71 | 2.31 | 0.960 |
+| XLU | Utilities Sector | -4.06% | -5.26% | -4.92% | 1.61 | 2.41 | 0.956 |
+| EWU | United Kingdom | -2.79% | -5.29% | -3.26% | 2.00 | 1.94 | 0.944 |
+| EWJ | Japan | -3.43% | -4.56% | -2.59% | 2.01 | 1.90 | 0.942 |
+| TLT | 20+ Year Treasuries | -1.90% | -1.85% | -0.82% | 1.69 | 1.81 | 0.861 |
+| EFA | EAFE | -3.04% | -4.86% | -2.81% | 1.62 | 1.82 | 0.822 |
+| DBB | Base Metals | -2.66% | -6.25% | -6.06% | 2.03 | 1.41 | 0.797 |
+| IEFA | Core EAFE | -3.12% | -4.86% | -2.84% | 1.35 | 1.84 | 0.760 |
+| SPY | S&P 500 | -1.70% | -3.31% | -2.07% | 1.55 | 1.58 | 0.754 |
+| EEM | Emerging Markets | -3.44% | -5.29% | -2.04% | 1.72 | 1.44 | 0.754 |
 
 ## Top Momentum Score With Positive 3D Trend (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Vol Ratio 5D | Range Ratio 5D | Momentum Score |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| IBIT | Bitcoin | 3.89% | 4.67% | 7.18% | 1.01 | 0.77 | 0.504 |
-| XLRE | Real Estate Sector | 0.78% | 0.40% | -0.93% | 1.09 | 0.75 | 0.458 |
-| FXI | China Large Cap | 1.77% | 1.32% | 1.10% | 1.16 | 0.56 | 0.443 |
-| USO | Oil | -4.05% | 6.46% | 10.26% | 0.75 | 0.61 | 0.426 |
-| XLU | Utilities Sector | 0.64% | 2.36% | 0.88% | 0.78 | 0.85 | 0.424 |
-| DBC | Broad Commodities | -1.39% | 0.64% | 4.31% | 0.77 | 0.75 | 0.404 |
-| XLE | Energy Sector | 0.35% | 1.61% | 2.81% | 0.68 | 0.77 | 0.384 |
-| PDBC | Diversified Commodities | -1.34% | 0.84% | 4.39% | 0.65 | 0.76 | 0.379 |
-| XLP | Consumer Staples Sector | 0.28% | 0.46% | -1.15% | 0.79 | 0.62 | 0.350 |
-| TLT | 20+ Year Treasuries | 0.77% | 0.08% | -2.26% | 0.80 | 0.64 | 0.349 |
+| DBC | Broad Commodities | 0.35% | 0.63% | 0.80% | 1.76 | 0.89 | 0.669 |
+| XLE | Energy Sector | -0.08% | 1.37% | 2.79% | 1.38 | 1.11 | 0.643 |
+| CORN | Corn | -0.16% | 2.56% | 0.70% | 1.47 | 0.73 | 0.567 |
+| PDBC | Diversified Commodities | 0.64% | 0.93% | 1.17% | 0.83 | 0.93 | 0.451 |
+| WEAT | Wheat | -2.10% | 1.06% | -2.48% | 0.87 | 0.91 | 0.440 |
+| USO | Oil | 3.47% | 2.18% | 1.28% | 0.76 | 0.83 | 0.416 |
+| DBA | Agriculture | -0.44% | 0.86% | 0.37% | 0.74 | 0.65 | 0.356 |
+| UNG | Natural Gas | -1.35% | 1.56% | -1.98% | 0.81 | 0.57 | 0.344 |
+| SOYB | Soybeans | -0.58% | 0.04% | -2.75% | 0.57 | 0.80 | 0.330 |
 
 ## Top Mean Reversion Score (Today)
 | ETF | Name | 1D Ret | 3D Ret | 5D Ret | Dist MA(5) | ZScore(5D) | Mean Reversion Score |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| IBIT | Bitcoin | 3.89% | 4.67% | 7.18% | 0.0379 | 1.724 | 1.049 |
-| SOYB | Soybeans | -3.88% | -3.72% | -1.73% | -0.0291 | -1.679 | 1.019 |
-| DBA | Agriculture | -1.12% | -0.94% | -0.38% | -0.0076 | -1.596 | 0.961 |
-| FXI | China Large Cap | 1.77% | 1.32% | 1.10% | 0.0117 | 1.472 | 0.888 |
-| XLU | Utilities Sector | 0.64% | 2.36% | 0.88% | 0.0122 | 1.342 | 0.810 |
-| UNG | Natural Gas | -3.40% | -5.20% | -0.81% | -0.0316 | -1.089 | 0.666 |
-| CORN | Corn | -2.20% | -1.40% | 0.33% | -0.0109 | -1.077 | 0.651 |
-| GLD | Gold | -0.09% | -3.32% | -2.56% | -0.0171 | -0.969 | 0.588 |
-| SLV | Silver | 0.73% | -6.02% | -6.44% | -0.0376 | -0.912 | 0.562 |
-| GDX | Gold Miners | 1.20% | -6.89% | -7.87% | -0.0402 | -0.902 | 0.557 |
+| EWZ | Brazil | -3.95% | -4.49% | -1.21% | -0.0318 | -1.736 | 1.054 |
+| XLU | Utilities Sector | -4.06% | -5.26% | -4.92% | -0.0390 | -1.719 | 1.047 |
+| EWJ | Japan | -3.43% | -4.56% | -2.59% | -0.0324 | -1.705 | 1.036 |
+| TLT | 20+ Year Treasuries | -1.90% | -1.85% | -0.82% | -0.0133 | -1.700 | 1.025 |
+| TIP | TIPS | -0.80% | -1.10% | -0.44% | -0.0072 | -1.694 | 1.019 |
+| XLK | Technology Sector | -2.27% | -3.05% | -1.10% | -0.0196 | -1.672 | 1.011 |
+| EMB | EM USD Bonds | -1.56% | -2.05% | -1.30% | -0.0132 | -1.672 | 1.008 |
+| AGG | Core US Aggregate Bond | -0.83% | -1.14% | -0.55% | -0.0073 | -1.671 | 1.005 |
+| BND | Total Bond Market | -0.80% | -1.09% | -0.52% | -0.0070 | -1.670 | 1.005 |
+| VEA | Developed Markets | -3.30% | -5.15% | -2.79% | -0.0339 | -1.631 | 0.992 |
