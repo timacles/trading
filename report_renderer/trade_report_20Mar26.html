@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Market Analysis Report - 2026-03-20</title>
+  <style>
+:root {
+  --bg: #0d1117;
+  --bg-deep: #090c12;
+  --panel: rgba(18, 24, 34, 0.86);
+  --panel-strong: rgba(23, 30, 42, 0.94);
+  --border: rgba(167, 185, 210, 0.14);
+  --text: #edf3ff;
+  --muted: #9daec9;
+  --shadow: 0 26px 60px rgba(0, 0, 0, 0.34);
+  --bullish: #5ad08c;
+  --bearish: #ff7d6e;
+  --neutral: #e6c15a;
+  --mixed: #a78bfa;
+  --risk-on: #5ad08c;
+  --risk-off: #ff8a78;
+  --transitional: #e6c15a;
+  --long: #5ad08c;
+  --short: #ff7d6e;
+  --watch: #8ea2ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(43, 92, 146, 0.26), transparent 32%),
+    radial-gradient(circle at top right, rgba(29, 143, 100, 0.18), transparent 30%),
+    radial-gradient(circle at bottom, rgba(90, 53, 123, 0.22), transparent 34%),
+    linear-gradient(180deg, #101620 0%, var(--bg) 45%, var(--bg-deep) 100%);
+}
+
+.shell {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(17, 29, 44, 0.98), rgba(28, 54, 70, 0.94));
+  color: #f4f8ff;
+  border-radius: 28px;
+  padding: 28px 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -80px -120px auto;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(121, 174, 255, 0.18), transparent 65%);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font: 600 0.75rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+  opacity: 0.75;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 0.95;
+  max-width: 9ch;
+}
+
+.hero-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.hero-stat,
+.panel,
+.bucket {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.hero-stat {
+  padding: 16px 18px;
+  color: var(--text);
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font: 700 0.78rem/1 "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.label.regime-risk-off, .label.direction-bearish, .label.direction-short, .label.setup-hedge {
+  background: rgba(255, 125, 110, 0.14);
+  color: var(--bearish);
+}
+
+.label.regime-risk-on, .label.direction-bullish, .label.direction-long, .label.setup-continuation {
+  background: rgba(90, 208, 140, 0.14);
+  color: var(--bullish);
+}
+
+.label.regime-mixed, .label.direction-mixed, .label.style-mixed, .label.exposure-market-neutral {
+  background: rgba(167, 139, 250, 0.15);
+  color: var(--mixed);
+}
+
+.label.regime-transitional, .label.direction-neutral, .label.style-mean-reversion, .label.setup-mean-reversion {
+  background: rgba(230, 193, 90, 0.16);
+  color: var(--neutral);
+}
+
+.label.style-momentum, .label.exposure-net-long, .label.exposure-selective-long {
+  background: rgba(90, 208, 140, 0.14);
+  color: var(--bullish);
+}
+
+.label.exposure-net-short, .label.exposure-selective-short {
+  background: rgba(255, 125, 110, 0.14);
+  color: var(--bearish);
+}
+
+.label.setup-watchlist {
+  background: rgba(142, 162, 255, 0.14);
+  color: var(--watch);
+}
+
+.label.setup-hedge, .label.exposure-mixed {
+  background: rgba(157, 173, 201, 0.12);
+  color: #d1daea;
+}
+
+.stat-title,
+.section-title,
+.kicker {
+  font: 700 0.86rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.stat-value {
+  margin-top: 12px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.section {
+  margin-top: 22px;
+}
+
+.panel {
+  padding: 24px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  color: var(--text);
+}
+
+.positioning-grid,
+.signals-grid,
+.bucket-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.positioning-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.signals-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.bucket-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.narrative {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.narrative p,
+.bucket p,
+li {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.table-shell {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(12, 18, 27, 0.72);
+}
+
+table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  font: 700 0.82rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+td {
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(31, 40, 56, 0.96);
+  border: 1px solid var(--border);
+  font: 600 0.92rem/1 "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+}
+
+li + li {
+  margin-top: 10px;
+}
+
+.bucket {
+  padding: 22px;
+  background: var(--panel-strong);
+}
+
+.bucket-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.bucket-title {
+  font-size: 1.4rem;
+  line-height: 1.05;
+}
+
+.bucket-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bucket-block + .bucket-block {
+  margin-top: 18px;
+}
+
+.risk-note {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 125, 110, 0.08);
+  border: 1px solid rgba(255, 125, 110, 0.16);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding: 18px 14px 32px;
+  }
+
+  .hero,
+  .panel,
+  .bucket {
+    border-radius: 20px;
+  }
+
+  .hero {
+    padding: 22px 18px;
+  }
+
+  .panel,
+  .bucket {
+    padding: 18px;
+  }
+}
+</style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Macro Dashboard</p>
+      <h1>Market Analysis Report</h1>
+      <p class="muted" style="color: rgba(255,247,240,0.78); margin-top: 12px;">Report date: March 20, 2026</p>
+      <div class="hero-grid">
+        <div class="hero-stat">
+          <p class="stat-title">Regime</p>
+          <div class="stat-value"><span class="label regime-risk_off">Risk Off</span></div>
+        </div>
+        
+        <div class="hero-stat">
+          <p class="stat-title">Directional Bias</p>
+          <div class="stat-value"><span class="label direction-bearish">Bearish</span></div>
+        </div>
+        
+        <div class="hero-stat">
+          <p class="stat-title">Confidence</p>
+          <div class="stat-value">83%</div>
+        </div>
+        
+        <div class="hero-stat">
+          <p class="stat-title">Trade Style</p>
+          <div class="stat-value"><span class="label style-momentum">Momentum</span></div>
+        </div>
+        
+        <div class="hero-stat">
+          <p class="stat-title">Net Exposure</p>
+          <div class="stat-value"><span class="label exposure-selective_short">Selective Short</span></div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section panel">
+      <div class="section-head">
+        <h2 class="section-title">Positioning Outlook</h2>
+        <p class="muted">Short-term posture and swing context</p>
+      </div>
+      <div class="positioning-grid">
+        <article class="narrative">
+          <p class="kicker">1-5 Day View</p>
+          <p>Broad risk remains under pressure, so favor selective shorts and narrow commodity-energy continuation rather than broad dip buying.</p>
+        </article>
+        <article class="narrative">
+          <p class="kicker">Swing View</p>
+          <p>Swing setups should stay defensive until breadth and bond-credit behavior stabilize, with oversold metals and rates-sensitive assets kept as secondary bounce watchlists.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section panel">
+      <div class="section-head">
+        <h2 class="section-title">Theme Map</h2>
+        <p class="muted">Leadership and reversal candidates</p>
+      </div>
+      <p class="kicker">Leadership Themes</p>
+      <div class="chips"><span class="chip">energy</span><span class="chip">broad commodities</span><span class="chip">agriculture</span><span class="chip">oil</span><span class="chip">coal</span></div>
+      <p class="kicker" style="margin-top: 20px;">Reversal Themes</p>
+      <div class="chips"><span class="chip">precious metals bounce</span><span class="chip">oversold duration</span><span class="chip">utilities snapback</span><span class="chip">developed ex-US bounce</span></div>
+    </section>
+
+    <section class="section signals-grid">
+      <article class="panel">
+        <div class="section-head">
+          <h2 class="section-title">Supporting Signals</h2>
+          <p class="muted">What confirms the stance</p>
+        </div>
+        <ul><li>Breadth was 4 advancers versus 44 decliners with average 1 day return near negative 1.9 percent</li><li>Breadth volume and range ratios above 1.3 show expanding downside participation</li><li>Credit and duration both fell, with TLT down hardest and HYG JNK also negative</li><li>Sector ETF 3 day continuation is concentrated in DBC XLE USO and agriculture funds</li><li>Industry momentum leadership is concentrated in oil gas and coal rather than broad cyclicals</li></ul>
+      </article>
+      <article class="panel">
+        <div class="section-head">
+          <h2 class="section-title">Conflicting Signals</h2>
+          <p class="muted">What could interrupt the base case</p>
+        </div>
+        <ul><li>Commodity and energy ETFs still have positive 3 day follow through</li><li>Precious metals and some defensive assets are already deeply stretched on the downside</li><li>Technology appears on the ETF mean reversion list, which could support a tactical bounce if selling slows</li></ul>
+      </article>
+    </section>
+
+    <section class="section panel">
+      <div class="section-head">
+        <h2 class="section-title">Allocation Table</h2>
+        <p class="muted">Bucket, strategy, symbols, and allocation</p>
+      </div>
+      
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Allocation Bucket</th>
+            <th>Strategy</th>
+            <th>Specific Symbols</th>
+            <th>Alloc %</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>broad index short bias</td>
+              <td>Continuation Short</td>
+              <td>SPY, EFA, EEM</td>
+              <td>20-30%</td>
+            </tr>
+            
+            <tr>
+              <td>energy continuation</td>
+              <td>Continuation Long</td>
+              <td>XLE, USO</td>
+              <td>10-20%</td>
+            </tr>
+            
+            <tr>
+              <td>broad commodities continuation</td>
+              <td>Continuation Long</td>
+              <td>DBC, PDBC, DBA</td>
+              <td>10-20%</td>
+            </tr>
+            
+            <tr>
+              <td>credit stress hedge</td>
+              <td>Hedge Short</td>
+              <td>HYG, JNK, EMB</td>
+              <td>10-20%</td>
+            </tr>
+            
+            <tr>
+              <td>oversold precious metals watchlist</td>
+              <td>Mean Reversion Long</td>
+              <td>GLD, SLV</td>
+              <td>0-10%</td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </div>
+    
+    </section>
+
+    <section class="section panel">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Allocation Framework</h2>
+          <p class="muted" style="margin-top: 6px;">Preferred trade types: broad index shorts, energy continuation longs, commodity continuation longs, credit hedge shorts, oversold bounce watchlists</p>
+        </div>
+        <span class="label exposure-selective_short">Selective Short</span>
+      </div>
+      <div class="bucket-grid">
+        
+    <article class="bucket">
+      <div class="bucket-head">
+        <div>
+          <p class="kicker">Allocation Bucket</p>
+          <h3 class="bucket-title">broad index short bias</h3>
+        </div>
+        <span class="label direction-short">Short</span>
+      </div>
+      <div class="bucket-meta"><span class="label direction-short">Short</span><span class="chip">20-30%</span><span class="chip">1-5d</span><span class="label setup-continuation">Continuation</span></div>
+      <div class="bucket-block">
+        <p class="stat-title">Specific Symbols</p>
+        <p>SPY, EFA, EEM</p>
+      </div>
+      <div class="bucket-block">
+        <p class="stat-title">Evidence</p>
+        <ul><li>SPY EFA and EEM are all in ETF momentum weakness with negative 1 day and 3 day returns</li><li>Breadth is overwhelmingly negative with only 4 advancers</li><li>Downside participation is expanding on elevated volume and range</li></ul>
+      </div>
+      <div class="bucket-block risk-note">
+        <p class="stat-title">Risk / Invalidation</p>
+        <p>Reduce this short bias if breadth improves materially and major index ETFs stop making lower 3 day lows.</p>
+      </div>
+    </article>
+    
+    <article class="bucket">
+      <div class="bucket-head">
+        <div>
+          <p class="kicker">Allocation Bucket</p>
+          <h3 class="bucket-title">energy continuation</h3>
+        </div>
+        <span class="label direction-long">Long</span>
+      </div>
+      <div class="bucket-meta"><span class="label direction-long">Long</span><span class="chip">10-20%</span><span class="chip">1-5d</span><span class="label setup-continuation">Continuation</span></div>
+      <div class="bucket-block">
+        <p class="stat-title">Specific Symbols</p>
+        <p>XLE, USO</p>
+      </div>
+      <div class="bucket-block">
+        <p class="stat-title">Evidence</p>
+        <ul><li>XLE and USO are in the positive 3 day momentum list</li><li>Oil and gas industries dominate industry momentum leadership</li><li>XLE held roughly flat on the day while the broad tape sold off</li></ul>
+      </div>
+      <div class="bucket-block risk-note">
+        <p class="stat-title">Risk / Invalidation</p>
+        <p>Exit if XLE loses its recent relative strength and energy stops outperforming broad equities over 1 to 3 days.</p>
+      </div>
+    </article>
+    
+    <article class="bucket">
+      <div class="bucket-head">
+        <div>
+          <p class="kicker">Allocation Bucket</p>
+          <h3 class="bucket-title">broad commodities continuation</h3>
+        </div>
+        <span class="label direction-long">Long</span>
+      </div>
+      <div class="bucket-meta"><span class="label direction-long">Long</span><span class="chip">10-20%</span><span class="chip">1-5d</span><span class="label setup-continuation">Continuation</span></div>
+      <div class="bucket-block">
+        <p class="stat-title">Specific Symbols</p>
+        <p>DBC, PDBC, DBA</p>
+      </div>
+      <div class="bucket-block">
+        <p class="stat-title">Evidence</p>
+        <ul><li>DBC and PDBC show positive 1 day 3 day and 5 day returns</li><li>DBA remains positive over 3 day and 5 day windows</li><li>Commodity leadership aligns with coal and energy strength at the industry level</li></ul>
+      </div>
+      <div class="bucket-block risk-note">
+        <p class="stat-title">Risk / Invalidation</p>
+        <p>Cut exposure if commodity ETFs lose positive 3 day momentum or leadership narrows to a single contract only.</p>
+      </div>
+    </article>
+    
+    <article class="bucket">
+      <div class="bucket-head">
+        <div>
+          <p class="kicker">Allocation Bucket</p>
+          <h3 class="bucket-title">credit stress hedge</h3>
+        </div>
+        <span class="label direction-short">Short</span>
+      </div>
+      <div class="bucket-meta"><span class="label direction-short">Short</span><span class="chip">10-20%</span><span class="chip">1-5d</span><span class="label setup-hedge">Hedge</span></div>
+      <div class="bucket-block">
+        <p class="stat-title">Specific Symbols</p>
+        <p>HYG, JNK, EMB</p>
+      </div>
+      <div class="bucket-block">
+        <p class="stat-title">Evidence</p>
+        <ul><li>HYG JNK and EMB all posted negative 1 day and 3 day returns</li><li>Credit weakness confirms risk appetite deterioration rather than a clean safety rotation</li><li>Bond volatility and range expansion remain elevated</li></ul>
+      </div>
+      <div class="bucket-block risk-note">
+        <p class="stat-title">Risk / Invalidation</p>
+        <p>Cover if high yield and EM credit stabilize for multiple sessions and stop underperforming core bonds.</p>
+      </div>
+    </article>
+    
+    <article class="bucket">
+      <div class="bucket-head">
+        <div>
+          <p class="kicker">Allocation Bucket</p>
+          <h3 class="bucket-title">oversold precious metals watchlist</h3>
+        </div>
+        <span class="label direction-long">Long</span>
+      </div>
+      <div class="bucket-meta"><span class="label direction-long">Long</span><span class="chip">0-10%</span><span class="chip">swing</span><span class="label setup-mean_reversion">Mean Reversion</span></div>
+      <div class="bucket-block">
+        <p class="stat-title">Specific Symbols</p>
+        <p>GLD, SLV</p>
+      </div>
+      <div class="bucket-block">
+        <p class="stat-title">Evidence</p>
+        <ul><li>Silver and gold rank at the top of industry mean reversion candidates</li><li>Weekly losses are extreme in precious metals and related mining groups</li><li>This setup is secondary because broad market breadth is still weak</li></ul>
+      </div>
+      <div class="bucket-block risk-note">
+        <p class="stat-title">Risk / Invalidation</p>
+        <p>Only activate on clear stabilization; persistent downside in metals or renewed broad liquidation invalidates the bounce thesis.</p>
+      </div>
+    </article>
+    
+      </div>
+    </section>
+  </main>
+</body>
+</html>

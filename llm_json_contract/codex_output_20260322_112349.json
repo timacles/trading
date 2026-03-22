@@ -1,0 +1,170 @@
+{
+  "report_date": "2026-03-20",
+  "market_positioning": {
+    "regime": "risk_off",
+    "directional_bias": "bearish",
+    "confidence": 0.88,
+    "short_term_view_1_5d": "Broad participation remains decisively weak, so the best 1-5 day opportunities are selective commodity and energy continuation longs paired with defensive or index hedges rather than aggressive dip-buying.",
+    "swing_view": "Secondary swing setups favor narrow real-asset leadership, while oversold global equities, rates, and metals should be treated as bounce watchlists until breadth and credit stabilize.",
+    "preferred_trade_style": "momentum",
+    "leadership_themes": [
+      "energy leadership",
+      "broad commodities",
+      "agriculture grains",
+      "oil and gas value chain",
+      "real-asset inflation-sensitive pockets"
+    ],
+    "reversal_themes": [
+      "precious metals bounce watchlist",
+      "utilities oversold rebound watchlist",
+      "long-duration bonds tactical rebound watchlist",
+      "oversold international equities bounce watchlist",
+      "technology short-covering watchlist"
+    ],
+    "supporting_signals": [
+      "Breadth is extremely weak with 4 advancers versus 44 decliners.",
+      "Average 1-day return is sharply negative at about -1.89 percent.",
+      "Breadth volume and range ratios are elevated, showing broad downside participation and expanding volatility.",
+      "Sector ETF positive 3-day continuation is concentrated in DBC, XLE, USO, CORN, PDBC, and DBA.",
+      "Industry momentum is heavily concentrated in oil, gas, coal, refining, E&P, and midstream.",
+      "Treasuries, aggregate bonds, investment grade, high yield, and EM bonds all declined together, confirming stressed cross-asset conditions.",
+      "TLT shows the largest bond loss with elevated volatility, arguing against a clean safety bid."
+    ],
+    "conflicting_signals": [
+      "Commodity and energy leadership is narrow and does not confirm broad equity strength.",
+      "Several mean-reversion candidates are deeply stretched, raising short-covering bounce risk.",
+      "Some sector ETF momentum scores include heavily sold assets, which reflects ranking distortion rather than healthy leadership."
+    ]
+  },
+  "concrete_allocation_framework": {
+    "net_exposure": "selective_short",
+    "preferred_trade_types": [
+      "commodity continuation longs",
+      "energy relative-strength longs",
+      "broad equity index hedges",
+      "tactical oversold bounce watchlists",
+      "paired trades long real assets versus weak beta"
+    ],
+    "allocation_buckets": [
+      {
+        "theme": "energy momentum",
+        "etfs": [
+          "XLE",
+          "USO"
+        ],
+        "direction": "long",
+        "exposure_band": "20-30%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "XLE is positive over 3 and 5 days while broad equities are negative.",
+          "USO is positive across 1, 3, and 5 days.",
+          "Industry leadership is concentrated in refining, E&P, integrated, services, and midstream."
+        ],
+        "risk_or_invalidation": "Fails if XLE loses relative strength versus SPY or if oil-linked ETFs roll over and breadth remains deteriorating."
+      },
+      {
+        "theme": "broad commodities and agriculture continuation",
+        "etfs": [
+          "DBC",
+          "PDBC",
+          "CORN",
+          "DBA"
+        ],
+        "direction": "long",
+        "exposure_band": "10-20%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "DBC and PDBC are positive over 3 and 5 days.",
+          "CORN and DBA show positive short-term follow-through.",
+          "Real-asset leadership aligns with energy and commodity-sensitive industry strength."
+        ],
+        "risk_or_invalidation": "Reduce if DBC and DBA lose 3-day momentum or if commodity leadership narrows further to only one subtheme."
+      },
+      {
+        "theme": "broad index short bias",
+        "etfs": [
+          "SPY",
+          "EFA",
+          "IEFA",
+          "EWJ",
+          "EWU",
+          "EEM"
+        ],
+        "direction": "short",
+        "exposure_band": "20-30%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "Breadth is 4 up versus 44 down with negative average returns.",
+          "SPY is down across 1, 3, and 5 days with elevated volume and range.",
+          "International equity ETFs such as EFA, IEFA, EWJ, EWU, and EEM are also under pressure."
+        ],
+        "risk_or_invalidation": "Invalidated by a sharp breadth reversal with materially improved advancers and reduced downside participation."
+      },
+      {
+        "theme": "defensive hedge via weak credit and rates backdrop",
+        "etfs": [
+          "HYG",
+          "JNK",
+          "LQD",
+          "EMB",
+          "AGG",
+          "BND",
+          "TIP",
+          "TLT"
+        ],
+        "direction": "short",
+        "exposure_band": "10-20%",
+        "time_horizon": "1-5d",
+        "setup_type": "hedge",
+        "evidence": [
+          "HYG, JNK, LQD, EMB, AGG, BND, TIP, and TLT are all negative.",
+          "Bond volatility and range expansion are elevated.",
+          "Simultaneous weakness in duration and credit confirms unstable risk appetite."
+        ],
+        "risk_or_invalidation": "Hedge is less necessary if credit ETFs stabilize and Treasuries begin outperforming on a relative basis."
+      },
+      {
+        "theme": "oversold precious metals and duration bounce watchlist",
+        "etfs": [
+          "GLD",
+          "SLV",
+          "TLT",
+          "TIP"
+        ],
+        "direction": "long",
+        "exposure_band": "0-10%",
+        "time_horizon": "1-5d",
+        "setup_type": "mean_reversion",
+        "evidence": [
+          "Silver, gold, and precious-metals mining rank among the strongest industry mean-reversion candidates.",
+          "TLT and TIP appear on ETF mean-reversion lists after sharp pullbacks.",
+          "Downside is extended enough for a tactical countertrend bounce if selling pressure eases."
+        ],
+        "risk_or_invalidation": "Only actionable on stabilization; avoid pressing longs if bonds and metals continue making fresh relative lows."
+      },
+      {
+        "theme": "oversold equity bounce watchlist",
+        "etfs": [
+          "XLU",
+          "XLK",
+          "EWJ",
+          "EWZ",
+          "VEA"
+        ],
+        "direction": "neutral",
+        "exposure_band": "0-10%",
+        "time_horizon": "swing",
+        "setup_type": "watchlist",
+        "evidence": [
+          "XLU, XLK, EWJ, EWZ, and developed-market ETFs rank as oversold on mean reversion.",
+          "Several of these groups have suffered multi-day drawdowns large enough for short-covering.",
+          "Current breadth and credit conditions do not yet support treating them as primary longs."
+        ],
+        "risk_or_invalidation": "Promote only if breadth improves materially and credit stress stops worsening; otherwise they remain failed-bounce candidates."
+      }
+    ]
+  }
+}

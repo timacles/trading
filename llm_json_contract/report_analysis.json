@@ -1,0 +1,157 @@
+{
+  "report_date": "2026-03-20",
+  "market_positioning": {
+    "regime": "risk_off",
+    "directional_bias": "bearish",
+    "confidence": 0.88,
+    "short_term_view_1_5d": "Broad participation is decisively weak, so the higher-probability 1-5 day edge is selective momentum in energy and commodities while keeping overall exposure defensive and avoiding aggressive dip-buying.",
+    "swing_view": "Secondary swing setups favor narrow real-asset leadership and tactical oversold bounce watchlists, but weak breadth and stressed bonds/credit argue against broad swing longs.",
+    "preferred_trade_style": "momentum",
+    "leadership_themes": [
+      "energy leadership",
+      "broad commodities",
+      "agriculture/grains",
+      "oil-linked real assets"
+    ],
+    "reversal_themes": [
+      "precious metals bounce watchlist",
+      "utilities and real estate oversold rebound watchlist",
+      "long-duration bonds oversold bounce watchlist",
+      "technology tactical rebound watchlist"
+    ],
+    "supporting_signals": [
+      "Breadth is extremely weak with 4 advancers versus 44 decliners.",
+      "Average 1-day return is deeply negative at roughly -1.89%.",
+      "Average volume and range ratios are elevated, confirming broad downside participation and volatility expansion.",
+      "Energy and commodity ETFs with positive 3-day momentum include XLE, USO, DBC, PDBC, CORN and DBA.",
+      "Industry momentum is dominated by oil, gas and coal groups, confirming narrow real-asset leadership.",
+      "Treasuries, aggregate bonds and credit are all down, so cross-asset conditions are stressed rather than supportive."
+    ],
+    "conflicting_signals": [
+      "Positive 3-day momentum exists in commodities and energy despite weak equity breadth.",
+      "Several mean-reversion lists are populated by deeply oversold assets, increasing short-covering bounce risk.",
+      "Some leadership is narrow rather than absent, so outright blanket short exposure is less attractive than selective positioning."
+    ]
+  },
+  "concrete_allocation_framework": {
+    "net_exposure": "selective_short",
+    "preferred_trade_types": [
+      "energy continuation longs",
+      "commodity basket continuation longs",
+      "broad equity short bias",
+      "oversold bounce watchlists",
+      "defensive hedge exposure"
+    ],
+    "allocation_buckets": [
+      {
+        "theme": "energy momentum",
+        "etfs": [
+          "XLE",
+          "USO"
+        ],
+        "direction": "long",
+        "exposure_band": "20-30%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "XLE is positive over 3 and 5 days.",
+          "USO shows strong positive 1-day and 3-day follow-through.",
+          "Industry momentum is dominated by oil & gas E&P, integrated, refining, equipment and midstream."
+        ],
+        "risk_or_invalidation": "Fails if XLE and USO lose short-term relative strength or if energy stops outperforming while broad risk stays weak."
+      },
+      {
+        "theme": "broad commodities and agriculture continuation",
+        "etfs": [
+          "DBC",
+          "PDBC",
+          "CORN",
+          "DBA"
+        ],
+        "direction": "long",
+        "exposure_band": "10-20%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "DBC and PDBC both have positive 3-day and 5-day returns.",
+          "CORN and DBA are on the positive 3-day momentum list.",
+          "Leadership outside equities is concentrated in real-asset exposure."
+        ],
+        "risk_or_invalidation": "Reduce if DBC/PDBC lose positive 3-day momentum or if commodity leadership narrows further to only one contract."
+      },
+      {
+        "theme": "broad equity index short bias",
+        "etfs": [
+          "SPY",
+          "EFA",
+          "IEFA",
+          "EWJ",
+          "EEM"
+        ],
+        "direction": "short",
+        "exposure_band": "20-30%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "Breadth is 4 up versus 44 down.",
+          "SPY, EFA, IEFA, EWJ and EEM all show sharp recent downside pressure.",
+          "Negative average return with elevated volume and range supports continuation of weak tape."
+        ],
+        "risk_or_invalidation": "Invalidated by breadth stabilization and a clear expansion in advancers, especially if index ETFs stop making downside progress."
+      },
+      {
+        "theme": "rate-sensitive and defensive equity weakness",
+        "etfs": [
+          "XLU",
+          "XLRE",
+          "TLT"
+        ],
+        "direction": "short",
+        "exposure_band": "10-20%",
+        "time_horizon": "1-5d",
+        "setup_type": "continuation",
+        "evidence": [
+          "XLU and XLRE have severe 1-day, 3-day and 5-day losses.",
+          "Long-duration Treasuries are also weak, reinforcing pressure on rate-sensitive groups.",
+          "These sectors appear on mean-reversion lists only after already suffering heavy downside."
+        ],
+        "risk_or_invalidation": "Higher squeeze risk after sharp drops; reduce if TLT stabilizes and utilities/real estate stop underperforming."
+      },
+      {
+        "theme": "oversold precious metals and bond rebound watchlist",
+        "etfs": [
+          "TLT",
+          "TIP",
+          "AGG",
+          "BND"
+        ],
+        "direction": "neutral",
+        "exposure_band": "0-10%",
+        "time_horizon": "swing",
+        "setup_type": "watchlist",
+        "evidence": [
+          "Silver, gold and related mining groups dominate industry mean-reversion.",
+          "TLT, TIP, AGG and BND are on ETF mean-reversion lists after sharp declines.",
+          "The moves are extended enough to allow tactical rebounds if selling pressure pauses."
+        ],
+        "risk_or_invalidation": "These are watchlists, not core longs; invalidate if bonds and metals continue making fresh downside extensions without stabilization."
+      },
+      {
+        "theme": "portfolio hedge and cash buffer",
+        "etfs": [
+          "SHY"
+        ],
+        "direction": "neutral",
+        "exposure_band": "10-20%",
+        "time_horizon": "1-5d",
+        "setup_type": "hedge",
+        "evidence": [
+          "Bond and credit weakness means there is no clean defensive refuge.",
+          "Volatility and range expansion argue for lower gross exposure.",
+          "Narrow leadership in energy/commodities is not enough to justify aggressive net long positioning."
+        ],
+        "risk_or_invalidation": "Scale down only if breadth materially improves and leadership broadens beyond real assets."
+      }
+    ]
+  }
+}
